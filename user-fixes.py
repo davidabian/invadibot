@@ -507,8 +507,8 @@ fixes['inva-wp-es'] = {
                 (ur'([^\d])0(\d\s+de\s+)noviembre\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2noviembre de \3\4'),
                 (ur'([^\d])0(\d\s+de\s+)diciembre\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2diciembre de \3\4'),
 
-                # Aplicar versalita y espacio indivisible en siglos con
-                # especificación de antes o después de Cristo
+                # Aplicar versalita y espacio indivisible en siglos
+                # con especificación de antes o después de Cristo
                 ##
                 #
                 #  POR DESARROLLAR
