@@ -626,6 +626,9 @@ fixes['inva-wp-es'] = {
             # Carrera
             (ur'(?i)\n=(=*\s*)(carr[ée]ra)(\s*)=', ur'=\1Carrera\3='),
             (ur'(?i)\n=(=*\s*)(career)(\s*)=', ur'=\1Carrera\3='),
+            # Carrera artística
+            (ur'(?i)\n=(=*\s*)carr[ée]ra(\s+)art[íiì]stica(\s*)=', ur'=\1Carrera\2artística\3='),
+            (ur'(?i)\n=(=*\s*)(artistic\s+career|career\s+in\s+art)(\s*)=', ur'=\1Carrera artística\3='),
             # Crítica
             (ur'(?i)\n=(=*\s*)(cr[íiì]tica)(\s*)=', ur'=\1Crítica\3='),
             # Críticas
@@ -635,9 +638,15 @@ fixes['inva-wp-es'] = {
             # Demografía
             (ur'(?i)\n=(=*\s*)(demograf[íiì]a)(\s*)=', ur'=\1Demografía\3='),
             (ur'(?i)\n=(=*\s*)(demography)(\s*)=', ur'=\1Demografía\3='),
+            # Descripción
+            (ur'(?i)\n=(=*\s*)(description)(\s*)=', ur'=\1Descripción\3='),
+            (ur'(?i)\n=(=*\s*)(descrip[cs]i[óoò]n)(\s*)=', ur'=\1Descripción\3='),
             # Discografía
-            (ur'(?i)\n=(=*\s*)(discograf[ìií]a)(\s*)=', ur'=\1Discografía\3='),
+            (ur'(?i)\n=(=*\s*)(discograf[íiì]a)(\s*)=', ur'=\1Discografía\3='),
             (ur'(?i)\n=(=*\s*)(discography)(\s*)=', ur'=\1Discografía\3='),
+            # Distribución
+            (ur'(?i)\n=(=*\s*)(distribution)(\s*)=', ur'=\1Distribución\3='),
+            (ur'(?i)\n=(=*\s*)(distribu[cs]i[óoò]n)(\s*)=', ur'=\1Distribución\3='),
             # Economía
             (ur'(?i)\n=(=*\s*)(econom[íiì]a)(\s*)=', ur'=\1Economía\3='),
             (ur'(?i)\n=(=*\s*)(economy)(\s*)=', ur'=\1Economía\3='),
