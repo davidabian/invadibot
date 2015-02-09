@@ -732,11 +732,10 @@ fixes['inva-wp-es'] = {
             # Véase también
             (ur'(?i)\n=(=*\s*)(see\s+also)(\s*)=', ur'=\1Véase también\3='),
             (ur'(?i)\n=(=*\s*)([vb]er\s+t[áa][nm][bv]i[éeè]n)(\s*)=', ur'=\1Véase también\3='),
-            (ur'(?i)\n=(=*\s*)(m[íi]r[ea](?:se)?\s+ta[nm][vb]?i[éeè]n)(\s*)=', ur'=\1Véase también\3='),
+            (ur'(?i)\n=(=*\s*)(m[íiì]r[ea](?:se)?\s+ta[nm][vb]?i[éeè]n)(\s*)=', ur'=\1Véase también\3='),
             (ur'(?i)\n=(=*\s*)([vb][éeè]a?n?[cs]e\s+t[aá][nm][vb]i[éeè]n)(\s*)=', ur'=\1Véase también\3='),
             (ur'(?i)\n=(=*\s*)(v[éeè]a\s+ta[nm][vb]i[éeè]n)(\s*)=', ur'=\1Véase también\3='),
             (ur'(?i)\n=(=*\s*)(art[íiì]cu?los?\s+[Rr]elacion[áa]dos?)(\s*)=', ur'=\1Véase también\3='),
-            (ur'(?i)\n=(=*\s*)(m[íiì]rese\s+tambi[éeè]n)(\s*)=', ur'=\1Véase también\3='),
             
     ],
     'exceptions': {
