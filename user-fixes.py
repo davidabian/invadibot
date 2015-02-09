@@ -36,9 +36,6 @@
 #   [es] Expresiones regulares para mejorar enlaces a proyectos Wikimedia y 
 #        aplicar direcciones URL de protocolo relativo.
 #
-#   Source:
-#   <https://meta.wikimedia.org/wiki/User:Invadibot/scope/meta-2/user-fixes.py>
-#
 #   Goals and procedures:
 #   <https://meta.wikimedia.org/wiki/User:Invadibot/scope/meta-2>
 #
@@ -50,8 +47,7 @@ fixes['inva-wmp-prurls'] = {
      'msg': {
           #
           #  Please add an edit summary for your project,
-          #  if not defined, and update this script in
-          #  <https://meta.wikimedia.org/wiki/User:Invadibot/scope/meta-2/user-fixes.py>.
+          #  if not defined.
           #
           '_default': u'[[:m:User:Invadibot/scope/meta-2|Bot]]: Fixing links to Wikimedia projects and applying protocol-relative URLs',
           'an':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]: Apanyando vinclos enta prochectos Wikimedia y aplicando adrezas URL de protocolo relativo',
