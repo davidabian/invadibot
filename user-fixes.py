@@ -192,8 +192,8 @@ fixes['inva-wp-es'] = {
         (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]it[ae][\s_]*[Nn]ews([\s_]*[}\|])', ur'{{cita noticia\1'),
         # Cit[ae] ?book → Cita libro
         (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]it[ae][ _]*book([\s_]*[}\|])', ur'{{cita libro\1'),
-        # Cit[ae] ?(journal|publicacion|revista) → Cita publicación
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]it[ae][ _]*(?:journal|publicacion|revista)([\s_]*[}\|])', ur'{{cita publicación\1'),
+        # Cit[ae]r? ?(journal|publicaci[óo]n?|revista) | Ref[- ]publicació → Cita publicación
+        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]it[ae]r?[ _]*(?:journal|publicaci[óo]n?|revista)|[Rr]ef[- ]publicaci[óo])([\s_]*[}\|])', ur'{{cita publicación\1'),
         
         # Traducción y estandarización indiscriminadas de parámetros de citas
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]ccessdate(\s*=.*?})', ur'\1fechaacceso\2'),
