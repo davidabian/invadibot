@@ -178,20 +178,19 @@ fixes['inva-wp-es'] = {
         # Retirada de la plantilla de solicitud de intervención con Invadibot
         (ur'(?i){{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*invadibot[^}]*?}}\s*(.)', ur'\1'),
 
-        #  Cite[ -]?web(site)?
-        #  | Citar web
-        #  | Web[ -]cite
-        #  | Lien[ -]web
-        #  | Ref[ -](internet|web) → Cita web
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]ite[ _-]?web(?:site)?|[Cc]itar[ _]web|[Ww]eb[ _-]cite|[Ll]ien[ _-]web|[Rr]ef[ _-](?:internet|web))([\s_]*[}\|])', ur'{{cita web\1'),
-        # Cit[ae] ?news → Cita noticia
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]it[ae][\s_]*[Nn]ews([\s_]*[}\|])', ur'{{cita noticia\1'),
-        # Cit[ae] ?book → Cita libro
+        # Pasar a {{cita libro}}
         (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]it[ae][ _]*book([\s_]*[}\|])', ur'{{cita libro\1'),
-        # Cit[ae]r? ?(journal|publicaci[óo]n?|revista) | Ref[- ]publicació → Cita publicación
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]it[ae]r?[ _]*(?:journal|publicaci[óo]n?|revista)|[Rr]ef[- ]publicaci[óo])([\s_]*[}\|])', ur'{{cita publicación\1'),
+        # Pasar a {{cita noticia}}
+        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]it[ae][\s_]*[Nn]ews([\s_]*[}\|])', ur'{{cita noticia\1'),
+        # Pasar a {{cita publicación}}
+        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]it[ae]r?[ _]*journal|[Cc]it(?:ar|e)[ _]*publicaci[óo]n?|[Cc]itar?[ _]*revista|[Rr]ef[- ]publicaci[óo]n?)([\s_]*[}\|])', ur'{{cita publicación\1'),
+        # Pasar a {{cita vídeo}}
+        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]it[ae]r?[ _]*video|[Cc]it(:ar|e)[ _]*vídeo|[Cc]it[ae]r?[ _]*[Aa][Vv][ _]*[Mm]edia)([\s_]*[}\|])', ur'{{cita vídeo\1'),
+        # Pasar a {{cita web}}
+        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]ite[ _-]?web(?:site)?|[Cc]itar[ _]web|[Ww]eb[ _-]cite|[Ll]ien[ _-]web|[Rr]ef[ _-](?:internet|web))([\s_]*[}\|])', ur'{{cita web\1'),
         
-        # Traducción y estandarización indiscriminadas de parámetros de citas
+        # Traducción y estandarización indiscriminadas de parámetros para citas
+        # libro, noticia, publicación y web
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]ccessdate(\s*=.*?})', ur'\1fechaacceso\2'),
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]ccessmonth(\s*=.*?})', ur'\1mesacceso\2'),
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]ccessmonthday(\s*=.*?})', ur'\1mesacceso\2'),
