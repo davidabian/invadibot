@@ -625,6 +625,8 @@ fixes['inva-wp-es'] = {
         (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Rr]ef(?:erences|list)(\s*[}\|])', ur'{{listaref\1'),
 
         # Estandarizar secciones
+            # Álbumes
+            (ur'(?i)\n=(=*\s*)([áaà]lbu[mn]e?s)(\s*)=', ur'=\1Álbumes\3='),
             # Arquitectura
             (ur'(?i)\n=(=*\s*)(architecture)(\s*)=', ur'=\1Arquitectura\3='),
             (ur'(?i)\n=(=*\s*)(arquitect[úu]ra)(\s*)=', ur'=\1Arquitectura\3='),
