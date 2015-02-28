@@ -244,6 +244,7 @@ fixes['inva-wp-es'] = {
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Qq]uote(\s*=.*?})', ur'\1cita\2'),
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Tt]itle(\s*=.*?})', ur'\1título\2'),
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Tt][íi]tol(\s*=.*?})', ur'\1título\2'), #ca
+        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Uu]bicacion(\s*=.*?})', ur'\1ubicación\2'),
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Uu]rlcapítol(\s*=.*?})', ur'\1urlcapítulo\2'), #ca
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Vv][ií]ncu?lo[ _]autora?(\s*=.*?})', ur'\1enlaceautor\2'),
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Vv]olum(\s*=.*?})', ur'\1volumen\2'), #ca
@@ -251,6 +252,22 @@ fixes['inva-wp-es'] = {
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ww]ork(\s*=.*?})', ur'\1obra\2'),
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Yy]ear(\s*=.*?})', ur'\1año\2'),
         (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)U(?:RL|rl)(\s*=.*?})', ur'\1url\2'),
+
+        # Traducir ubicaciones (en orden alfabético en español)
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:bagh?dad)(\s*[}\|])', ur'\1Bagdad\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:[ei]sta[mn]bul)(\s*[}\|])', ur'\1Estambul\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:londres|london)(\s*[}\|])', ur'\1Londres\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:[cs]iudad de m[éeè][jx]ico|m[éeè][jx]ico,? ?d\.? ?f\.?|mexico city)(\s*[}\|])', ur'\1México,&nbsp;D.&nbsp;F.\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:mosc[úuù]|moscow|moskva)(\s*[}\|])', ur'\1Moscú\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:nanjing|nank[íiì]ng?)(\s*[}\|])', ur'\1Nankín\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:nueva delh?i|new delhi)(\s*[}\|])', ur'\1Nueva&nbsp;Delhi\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:nue[bv]a york?|new york(?: city)?)(\s*[}\|])', ur'\1Nueva&nbsp;York\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:beijing|pek[íiì]ng?)(\s*[}\|])', ur'\1Pekín\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:seo?[úuù]l)(\s*[}\|])', ur'\1Seúl\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:sevill[ae])(\s*[}\|])', ur'\1Sevilla\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:sh?angh?[áaà]i)(\s*[}\|])', ur'\1Shanghái\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:tehe?r[áaà]n)(\s*[}\|])', ur'\1Teherán\2'),
+        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?ubicación\s*=\s*)(?:tok[iy]o)(\s*[}\|])', ur'\1Tokio\2'),
 
         # Traducir idiomas (en orden alfabético en español)
             # Traducciones de "alemán" al español
