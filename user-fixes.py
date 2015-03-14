@@ -923,7 +923,7 @@ fixes['inva-wp-es'] = {
                                                                                                    ur'|[Nn][úu]mero'
                                                                                                    ur'|[Pp]eri[óo]dico'
                                                                                                    ur'|[Rr]ef'
-                                                                                                   ur'|[Rr]evista
+                                                                                                   ur'|[Rr]evista'
                                                                                                    ur'|[Vv][íi]nculo ?autor\d)\s*=.*?[|}]',
             # No editar si el artículo contiene determinadas plantillas
                 # Artículos cuya edición por bots queda prohibida según
