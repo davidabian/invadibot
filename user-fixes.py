@@ -31,8 +31,7 @@
 #   |    Invadibot, global    |  https://meta.wikimedia.org/wiki/User:Invadibot
 #   +-------------------------+  http://davidabian.com/invadibot/
 #
-#   [en] Regular expressions for fixing links to Wikimedia projects and applying
-#        protocol-relative URLs.
+#   [en] Fixing links to Wikimedia projects and applying protocol-relative URLs.
 #   [es] Expresiones regulares para mejorar enlaces a proyectos Wikimedia y 
 #        aplicar direcciones URL de protocolo relativo.
 #
@@ -46,22 +45,52 @@ fixes['inva-wmp-prurls'] = {
      'regex': True,
      'msg': {
           #
-          #  Please add an edit summary for your project,
-          #  if not defined.
+          #  Please add an edit summary for your project if not defined.
           #
-          '_default': u'[[:m:User:Invadibot/scope/meta-2|Bot]]: Fixing links to Wikimedia projects and applying protocol-relative URLs',
-          'an':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]: Apanyando vinclos enta prochectos Wikimedia y aplicando adrezas URL de protocolo relativo',
-          'en':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]: Fixing links to Wikimedia projects and applying protocol-relative URLs',
-          'es':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]: Arreglando enlaces a proyectos Wikimedia y aplicando direcciones URL de protocolo relativo',
+          '_default': u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                      u' Fixing links to Wikimedia projects and applying'
+                      u' protocol-relative URLs',
+
+          'an':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                      u' Apanyando vinclos enta prochectos Wikimedia y'
+                      u' aplicando adrezas URL de protocolo relativo',
+
+          'en':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                      u' Fixing links to Wikimedia projects and applying'
+                      u' protocol-relative URLs',
+
+          'es':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                      u' Arreglando enlaces a proyectos Wikimedia y aplicando'
+                      u' direcciones URL de protocolo relativo',
+
           'fa':       u'[[:m:User:Invadibot/scope/meta-2|ربات]]: تصحیح پیوند به پروژه‌های خواهر و تبدیل کردن پیوندها به خنثی در برابر پروتکل', # --Ladsgroup
-          'foundation': u'[[:m:User:Invadibot/scope/meta-2|Bot]]: Fixing links to Wikimedia projects and applying protocol-relative URLs',
-          'gl':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]: Arranxando ligazóns a proxectos Wikimedia e aplicando enderezos URL de protocolo relativo',
-          'meta':     u'[[:m:User:Invadibot/scope/meta-2|Bot]]: Fixing links to Wikimedia projects and applying protocol-relative URLs',
-          'test':     u'[[:m:User:Invadibot/scope/meta-2|Bot]]: Testing links to Wikimedia projects',
+
+          'foundation': u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                        u' Fixing links to Wikimedia projects and applying'
+                        u' protocol-relative URLs',
+
+          'gl':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                      u' Arranxando ligazóns a proxectos Wikimedia e aplicando'
+                      u' enderezos URL de protocolo relativo',
+
+          'meta':     u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                      u' Fixing links to Wikimedia projects and applying'
+                      u' protocol-relative URLs',
+
+          'test':     u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                      u' Testing links to Wikimedia projects',
      },
      'replacements': [
-          (ur'\[http://([^@:/ ]+\.)wik(ipedia|inews|isource|ibooks|iquote|iversity|tionary|idata|ivoyage|imedia)\.org/', ur'[//\1wik\2.org/'),
-          (ur'\[http://wik(ipedia|inews|isource|ibooks|iquote|iversity|tionary|idata|ivoyage|imedia)\.org/',             ur'[//wik\1.org/'),
+          (ur'\[http://([^@:/ ]+\.)?wik(ipedia'
+                                    ur'|inews'
+                                    ur'|isource'
+                                    ur'|ibooks'
+                                    ur'|iquote'
+                                    ur'|iversity'
+                                    ur'|tionary'
+                                    ur'|idata'
+                                    ur'|ivoyage'
+                                    ur'|imedia)\.org/', ur'[//\1wik\2.org/'),
           (ur'\[http://(www\.)?mediawiki\.org/',                                             ur'[//\1mediawiki.org/'),
           (ur'\[http://(www\.)?wikimediafoundation\.org/',                                   ur'[//\1wikimediafoundation.org/'),
           (ur'\[//(www\.)?mail\.wikipedia\.org/',                                            ur'[//lists.wikimedia.org/'),
@@ -103,18 +132,95 @@ fixes['inva-wmp-prurls'] = {
      ],
      'exceptions': {
           'title': [
-               '\.(css|js|php|py|sh)',
-               '([Bb]lack|[Gg]r[ae]y|[Ww]hite)[ _]?[Ll]ist',
-               '([Ss]abliera|[Ss]and[ _]?([Bb]ox|[Pp]ut|[Cc]haschte|[Kk]assen?|[Kk]assinn|[Ll][aå]dan)|([Zz]ona|[Pp][aáà](g|ch)ina)[ _]?de[ _]?([Pp]r(ue[bv]as?|o[bv][ae]s|e[bv]atinas?)|[Tt]estes?))', # can be commented for testing purposes
-               u'(صفحه[ _]تمرین|گودال)', # for Persian, no need to make it very general --Ladsgroup
+              '\.(css|js|php|py|sh)',
+              '([Bb]lack'
+               '|[Gg]r[ae]y'
+               '|[Ww]hite'
+               ')'
+               '[ _]?[Ll]ist',
+              '([Ss]abliera'
+               '|[Ss]and[ _]?('
+                '[Bb]ox'
+                '|[Pp]ut'
+                '|[Cc]haschte'
+                '|[Kk]assen?'
+                '|[Kk]assinn'
+                '|[Ll][aå]dan'
+                ')'
+               '|('
+                '[Zz]ona'
+                '|[Pp][aáà](g|ch)ina'
+                ')[ _]?de[ _]?('
+                 '[Pp]r(ue[bv]as?'
+                 '|o[bv][ae]s'
+                 '|e[bv]atinas?'
+                 ')|[Tt]estes?'
+                ')'
+               ')',
+              # for Persian, no need to make it very general --Ladsgroup
+              u'(صفحه[ _]تمرین|گودال)',
           ],
           'inside': [
                (ur'\[//(www\.)?([^@:/ (www)]+)\.[a-z]+\.org/wiki/[^\s\]\?\|]+ (.*?\[\[.*?\]\].*?)+\]'),
                (ur'\[//[^\s\]]{400}.*?\]'),
-               (ur'\[http://(www\.)?(apt|bayes|bayle|brewster|commonsprototype\.tesla\.usability|commons\.prototype|cs|cz|dataset2|de\.prototype|download|dumps|ekrem|emery|en\.prototype|ersch|etherpad|fenari|flaggedrevssandbox|flgrevsandbox|gallium|ganglia|ganglia3|harmon|hume|ipv4\.labs|ipv6and4\.labs|jobs|mlqt\.tesla\.usability|mobile\.tesla\.usability|m|nagios|noboard\.chapters|noc|observium|oldusability|project2|prototype|results\.labs|search|sitemap|snapshot3|stafford|stats|status|svn|test\.prototype|torrus|ubuntu|wiki-mail|yongle)\.wikimedia\.org'),
-               (ur'\[http://(www\.)?(arbcom\.[a-z]+|download|m|static|wg\.[a-z]+)\.wikipedia\.org'),
+               (ur'\[http://(www\.)?(apt'
+                                 ur'|bayes'
+                                 ur'|bayle'
+                                 ur'|brewster'
+                                 ur'|commons\.prototype'
+                                 ur'|commonsprototype\.tesla\.usability'
+                                 ur'|cs'
+                                 ur'|cz'
+                                 ur'|dataset2'
+                                 ur'|de\.prototype'
+                                 ur'|download'
+                                 ur'|dumps'
+                                 ur'|ekrem'
+                                 ur'|emery'
+                                 ur'|en\.prototype'
+                                 ur'|ersch'
+                                 ur'|etherpad'
+                                 ur'|fenari'
+                                 ur'|flaggedrevssandbox'
+                                 ur'|flgrevsandbox'
+                                 ur'|gallium|ganglia'
+                                 ur'|ganglia3'
+                                 ur'|harmon'
+                                 ur'|hume'
+                                 ur'|ipv4\.labs'
+                                 ur'|ipv6and4\.labs'
+                                 ur'|jobs'
+                                 ur'|m'
+                                 ur'|mlqt\.tesla\.usability'
+                                 ur'|mobile\.tesla\.usability'
+                                 ur'|nagios'
+                                 ur'|noboard\.chapters'
+                                 ur'|noc'
+                                 ur'|observium'
+                                 ur'|oldusability'
+                                 ur'|project2'
+                                 ur'|prototype'
+                                 ur'|results\.labs'
+                                 ur'|search'
+                                 ur'|sitemap'
+                                 ur'|snapshot3'
+                                 ur'|stafford'
+                                 ur'|stats'
+                                 ur'|status'
+                                 ur'|svn'
+                                 ur'|test\.prototype'
+                                 ur'|torrus'
+                                 ur'|ubuntu'
+                                 ur'|wiki-mail'
+                                 ur'|yongle)\.wikimedia\.org'),
+               (ur'\[http://(www\.)?(arbcom\.[a-z]+'
+                                 ur'|download'
+                                 ur'|m'
+                                 ur'|static'
+                                 ur'|wg\.[a-z]+)\.wikipedia\.org'),
                (ur'\[http://(www\.)?[^@:/]+\.m\.wikipedia\.org'),
-               (ur'\[//(www\.)?(ten|test|test2)\.wikipedia\.org'), # preventing test.wikipedia → [[w:test:]]
+               # Preventing test.wikipedia → [[w:test:]]
+               (ur'\[//(www\.)?(ten|test|test2)\.wikipedia\.org'),
           ],
          'inside-tags': [
                 #
@@ -171,7 +277,8 @@ fixes['inva-wp-es'] = {
     'regex': True,
     'msg': {
         '_default': u'Bot: Estandarizaciones y otras mejoras automatizadas',
-        'es': u'Bot: [[m:User:Invadibot/scope#eswiki|8]] - Estandarizaciones y otras mejoras automatizadas',
+        'es': u'Bot: [[m:User:Invadibot/scope#eswiki|8]]'
+              u' - Estandarizaciones y otras mejoras automatizadas',
     },
     'replacements': [
         
@@ -645,22 +752,22 @@ fixes['inva-wp-es'] = {
             # Álbumes
             (ur'(?i)\n=(=*\s*)([áaà]lbu[mn]e?s)(\s*)=', ur'=\1Álbumes\3='),
             # Arquitectura
-            (ur'(?i)\n=(=*\s*)(architecture)(\s*)=', ur'=\1Arquitectura\3='),
-            (ur'(?i)\n=(=*\s*)(arquitect[úu]ra)(\s*)=', ur'=\1Arquitectura\3='),
+            (ur'(?i)\n=(=*\s*)(architecture'
+                           ur'|arquitect[úu]ra)(\s*)=', ur'=\1Arquitectura\3='),
             # Arte
             (ur'(?i)\n=(=*\s*)(arte?)(\s*)=', ur'=\1Arte\3='),
             # Bibliografía
-            (ur'(?i)\n=(=*\s*)(bibliography)(\s*)=', ur'=\1Bibliografía\3='),
-            (ur'(?i)\n=(=*\s*)(bibl[íi]?ograf[íiì]as?)(\s*)=', ur'=\1Bibliografía\3='),
+            (ur'(?i)\n=(=*\s*)(bibliography'
+                           ur'|bibl[íi]?ograf[íiì]as?)(\s*)=', ur'=\1Bibliografía\3='),
             # Biografía
-            (ur'(?i)\n=(=*\s*)(b[íi][óo]graf[ìií]a)(\s*)=', ur'=\1Biografía\3='),
-            (ur'(?i)\n=(=*\s*)(biography)(\s*)=', ur'=\1Biografía\3='),
+            (ur'(?i)\n=(=*\s*)(b[íi][óo]graf[ìií]a'
+                           ur'|biography)(\s*)=', ur'=\1Biografía\3='),
             # Características
-            (ur'(?i)\n=(=*\s*)(car[áaà]cter[íiì]sticas)(\s*)=', ur'=\1Características\3='),
-            (ur'(?i)\n=(=*\s*)(features)(\s*)=', ur'=\1Características\3='),
+            (ur'(?i)\n=(=*\s*)(car[áaà]cter[íiì]sticas'
+                           ur'|features)(\s*)=', ur'=\1Características\3='),
             # Carrera
-            (ur'(?i)\n=(=*\s*)(carr[ée]ra)(\s*)=', ur'=\1Carrera\3='),
-            (ur'(?i)\n=(=*\s*)(career)(\s*)=', ur'=\1Carrera\3='),
+            (ur'(?i)\n=(=*\s*)(carr[ée]ra'
+                           ur'|career)(\s*)=', ur'=\1Carrera\3='),
             # Carrera artística
             (ur'(?i)\n=(=*\s*)carr[ée]ra(\s+)art[íiì]stica(\s*)=', ur'=\1Carrera\2artística\3='),
             (ur'(?i)\n=(=*\s*)(artistic\s+career|career\s+in\s+art)(\s*)=', ur'=\1Carrera artística\3='),
@@ -671,85 +778,85 @@ fixes['inva-wp-es'] = {
             # Cultura
             (ur'(?i)\n=(=*\s*)(cultur[ae])(\s*)=', ur'=\1Cultura\3='),
             # Demografía
-            (ur'(?i)\n=(=*\s*)(demograf[íiì]a)(\s*)=', ur'=\1Demografía\3='),
-            (ur'(?i)\n=(=*\s*)(demography)(\s*)=', ur'=\1Demografía\3='),
+            (ur'(?i)\n=(=*\s*)(demograf[íiì]a'
+                           ur'|demography)(\s*)=', ur'=\1Demografía\3='),
             # Descripción
-            (ur'(?i)\n=(=*\s*)(description)(\s*)=', ur'=\1Descripción\3='),
-            (ur'(?i)\n=(=*\s*)(descrip[cs]i[óoò]n)(\s*)=', ur'=\1Descripción\3='),
+            (ur'(?i)\n=(=*\s*)(description'
+                           ur'|descrip[cs]i[óoò]n)(\s*)=', ur'=\1Descripción\3='),
             # Discografía
-            (ur'(?i)\n=(=*\s*)(discograf[íiì]a)(\s*)=', ur'=\1Discografía\3='),
-            (ur'(?i)\n=(=*\s*)(discography)(\s*)=', ur'=\1Discografía\3='),
+            (ur'(?i)\n=(=*\s*)(discograf[íiì]a'
+                           ur'|discography)(\s*)=', ur'=\1Discografía\3='),
             # Distribución
-            (ur'(?i)\n=(=*\s*)(distribution)(\s*)=', ur'=\1Distribución\3='),
-            (ur'(?i)\n=(=*\s*)(distribu[cs]i[óoò]n)(\s*)=', ur'=\1Distribución\3='),
+            (ur'(?i)\n=(=*\s*)(distribution'
+                           ur'|distribu[cs]i[óoò]n)(\s*)=', ur'=\1Distribución\3='),
             # Economía
-            (ur'(?i)\n=(=*\s*)(econom[íiì]a)(\s*)=', ur'=\1Economía\3='),
-            (ur'(?i)\n=(=*\s*)(economy)(\s*)=', ur'=\1Economía\3='),
+            (ur'(?i)\n=(=*\s*)(econom[íiì]a'
+                           ur'|economy)(\s*)=', ur'=\1Economía\3='),
             # Educación
             (ur'(?i)\n=(=*\s*)(educa[cst]i[óoò]n)(\s*)=', ur'=\1Educación\3='),
             # Enlaces externos
-            (ur'(?i)\n=(=*\s*)([bv][íiì]nc[úu]?l[óo]s?\s+e[xs]t[ée]rnos?)(\s*)=', ur'=\1Enlaces externos\3='),
-            (ur'(?i)\n=(=*\s*)(l[íi]gas?\s+e[xs]t[ée]rn[oa]s?)(\s*)=', ur'=\1Enlaces externos\3='),
-            (ur'(?i)\n=(=*\s*)(l[íi]nks?\s+e[xs]t[ée]rn[oa]s?)(\s*)=', ur'=\1Enlaces externos\3='),
-            (ur'(?i)\n=(=*\s*)([ée]nla[cs][ée]s?\s+e[xs]t[ée]rnos?)(\s*)=', ur'=\1Enlaces externos\3='),
-            (ur'(?i)\n=(=*\s*)(external\s+links?)(\s*)=', ur'=\1Enlaces externos\3='),
+            (ur'(?i)\n=(=*\s*)([bv][íiì]nc[úu]?l[óo]s?\s+e[xs]t[ée]rnos?'
+                           ur'|[ée]nla[cs][ée]s?\s+e[xs]t[ée]rnos?'
+                           ur'|external\s+links?'
+                           ur'|l[íi]gas?\s+e[xs]t[ée]rn[oa]s?'
+                           ur'|l[íi]nks?\s+e[xs]t[ée]rn[oa]s?)(\s*)=', ur'=\1Enlaces externos\3='),
             # Etimología
-            (ur'(?i)\n=(=*\s*)(etimolog[íiì]a)(\s*)=', ur'=\1Etimología\3='),
-            (ur'(?i)\n=(=*\s*)(et[iy]mology)(\s*)=', ur'=\1Etimología\3='),
+            (ur'(?i)\n=(=*\s*)(etimolog[íiì]a'
+                           ur'|et[iy]mology)(\s*)=', ur'=\1Etimología\3='),
             # Filmografía
-            (ur'(?i)\n=(=*\s*)(filmograf[ìií]a)(\s*)=', ur'=\1Filmografía\3='),
-            (ur'(?i)\n=(=*\s*)(filmography)(\s*)=', ur'=\1Filmografía\3='),
+            (ur'(?i)\n=(=*\s*)(filmograf[ìií]a'
+                           ur'|filmography)(\s*)=', ur'=\1Filmografía\3='),
             # Gobierno
-            (ur'(?i)\n=(=*\s*)(gobierno)(\s*)=', ur'=\1Gobierno\3='),
-            (ur'(?i)\n=(=*\s*)(government)(\s*)=', ur'=\1Gobierno\3='),
+            (ur'(?i)\n=(=*\s*)(gobierno'
+                           ur'|government)(\s*)=', ur'=\1Gobierno\3='),
             # Historia
-            (ur'(?i)\n=(=*\s*)(hist[óo]ria)(\s*)=', ur'=\1Historia\3='),
-            (ur'(?i)\n=(=*\s*)(history)(\s*)=', ur'=\1Historia\3='),
+            (ur'(?i)\n=(=*\s*)(hist[óo]ria'
+                           ur'|history)(\s*)=', ur'=\1Historia\3='),
             # Infancia
-            (ur'(?i)\n=(=*\s*)(inf[áa]n[cs]ia)(\s*)=', ur'=\1Infancia\3='),
-            (ur'(?i)\n=(=*\s*)(childhood)(\s*)=', ur'=\1Infancia\3='),
+            (ur'(?i)\n=(=*\s*)(inf[áa]n[cs]ia'
+                           ur'|childhood)(\s*)=', ur'=\1Infancia\3='),
             # Infraestructura
             (ur'(?i)\n=(=*\s*)(infrae?structur[ae])(\s*)=', ur'=\1Infraestructura\3='),
             # Localización
             (ur'(?i)\n=(=*\s*)(locali[zs]a[cst]i[óoò]n)(\s*)=', ur'=\1Localización\3='),
             # Muerte
-            (ur'(?i)\n=(=*\s*)(death)(\s*)=', ur'=\1Muerte\3='),
-            (ur'(?i)\n=(=*\s*)(muerte)(\s*)=', ur'=\1Muerte\3='),
+            (ur'(?i)\n=(=*\s*)(death'
+                           ur'|muerte)(\s*)=', ur'=\1Muerte\3='),
             # Música
-            (ur'(?i)\n=(=*\s*)(m[úuù]sica)(\s*)=', ur'=\1Música\3='),
-            (ur'(?i)\n=(=*\s*)(music)(\s*)=', ur'=\1Música\3='),
+            (ur'(?i)\n=(=*\s*)(m[úuù]sica'
+                           ur'|music)(\s*)=', ur'=\1Música\3='),
             # Notas y referencias
-            (ur'(?i)\n=(=*\s*)(notas\s+y\s+refer[ée]n[cs]ias)(\s*)=', ur'=\1Notas y referencias\3='),
-            (ur'(?i)\n=(=*\s*)(notes\s+and\s+references)(\s*)=', ur'=\1Notas y referencias\3='),
-            (ur'(?i)\n=(=*\s*)(refer[ée]n[cs]ias\s+y\s+notas)(\s*)=', ur'=\1Notas y referencias\3='),
-            (ur'(?i)\n=(=*\s*)(references\s+and\s+notes)(\s*)=', ur'=\1Notas y referencias\3='),
+            (ur'(?i)\n=(=*\s*)(notas\s+y\s+refer[ée]n[cs]ias'
+                           ur'|notes\s+and\s+references'
+                           ur'|refer[ée]n[cs]ias\s+y\s+notas'
+                           ur'|references\s+and\s+notes)(\s*)=', ur'=\1Notas y referencias\3='),
             # Obra
             (ur'(?i)\n=(=*\s*)(obra)(\s*)=', ur'=\1Obra\3='),
             # Población
-            (ur'(?i)\n=(=*\s*)(pobla[cs]i[óoò]n)(\s*)=', ur'=\1Población\3='),
-            (ur'(?i)\n=(=*\s*)(population)(\s*)=', ur'=\1Población\3='),
+            (ur'(?i)\n=(=*\s*)(pobla[cs]i[óoò]n'
+                           ur'|population)(\s*)=', ur'=\1Población\3='),
             # Premios
-            (ur'(?i)\n=(=*\s*)(pr[ée]mios)(\s*)=', ur'=\1Premios\3='),
-            (ur'(?i)\n=(=*\s*)(awards)(\s*)=', ur'=\1Premios\3='),
+            (ur'(?i)\n=(=*\s*)(pr[ée]mios'
+                           ur'|awards)(\s*)=', ur'=\1Premios\3='),
             # Premios y reconocimientos
-            (ur'(?i)\n=(=*\s*)(pr[ée]mios\s+y\s+recono[cs]imi[ée]ntos)(\s*)=', ur'=\1Premios y reconocimientos\3='),
-            (ur'(?i)\n=(=*\s*)(awards\s+and\s+honors)(\s*)=', ur'=\1Premios y reconocimientos\3='),
+            (ur'(?i)\n=(=*\s*)(pr[ée]mios\s+y\s+recono[cs]imi[ée]ntos'
+                           ur'|awards\s+and\s+honors)(\s*)=', ur'=\1Premios y reconocimientos\3='),
             # Referencias
-            (ur'(?i)\n=(=*\s*)(refer[éèe]n[cs]ias)(\s*)=', ur'=\1Referencias\3='),
-            (ur'(?i)\n=(=*\s*)(references?)(\s*)=', ur'=\1Referencias\3='),
-            (ur'(?i)\n=(=*\s*)(einzelnachweise)(\s*)=', ur'=\1Referencias\3='),
+            (ur'(?i)\n=(=*\s*)(refer[éèe]n[cs]ias'
+                           ur'|references?'
+                           ur'|einzelnachweise)(\s*)=', ur'=\1Referencias\3='),
             # Ubicación
             (ur'(?i)\n=(=*\s*)(ubica[cst]i[óoò]n)(\s*)=', ur'=\1Ubicación\3='),
             # Últimos años
-            (ur'(?i)\n=(=*\s*)(last +years)(\s*)=', ur'=\1Últimos años\3='),
-            (ur'(?i)\n=(=*\s*)([úuù]ltimos +años)(\s*)=', ur'=\1Últimos años\3='),
+            (ur'(?i)\n=(=*\s*)(last +years'
+                           ur'|[úuù]ltimos +años)(\s*)=', ur'=\1Últimos años\3='),
             # Véase también
-            (ur'(?i)\n=(=*\s*)(see\s+also)(\s*)=', ur'=\1Véase también\3='),
-            (ur'(?i)\n=(=*\s*)([vb]er\s+t[áa][nm][bv]i[éeè]n)(\s*)=', ur'=\1Véase también\3='),
-            (ur'(?i)\n=(=*\s*)(m[íiì]r[ea](?:se)?\s+ta[nm][vb]?i[éeè]n)(\s*)=', ur'=\1Véase también\3='),
-            (ur'(?i)\n=(=*\s*)([vb][éeè]a?n?[cs]e\s+t[aá][nm][vb]i[éeè]n)(\s*)=', ur'=\1Véase también\3='),
-            (ur'(?i)\n=(=*\s*)(v[éeè]a\s+ta[nm][vb]i[éeè]n)(\s*)=', ur'=\1Véase también\3='),
-            (ur'(?i)\n=(=*\s*)(art[íiì]cu?los?\s+[Rr]elacion[áa]dos?)(\s*)=', ur'=\1Véase también\3='),
+            (ur'(?i)\n=(=*\s*)(see\s+also'
+                           ur'|[vb]er\s+t[áa][nm][bv]i[éeè]n'
+                           ur'|m[íiì]r[ea](?:se)?\s+ta[nm][vb]?i[éeè]n'
+                           ur'|[vb][éeè]a?n?[cs]e\s+t[aá][nm][vb]i[éeè]n'
+                           ur'|v[éeè]a\s+ta[nm][vb]i[éeè]n'
+                           ur'|art[íiì]cu?los?\s+[Rr]elacion[áa]dos?)(\s*)=', ur'=\1Véase también\3='),
             
     ],
     'exceptions': {
@@ -788,14 +895,36 @@ fixes['inva-wp-es'] = {
             ur'«.*?»',
             ur'\s"[^"]+"[\s\.,;:]',
             # Contenido de citas
-            ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Cc]ita|[Qq]uote|[Cc]quote|[Qq]uotation|[Zz]itat)[\s_]*\|.+?}}',
+            ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Cc]ita'
+                                                                     ur'|[Qq]uote'
+                                                                     ur'|[Cc]quote'
+                                                                     ur'|[Qq]uotation'
+                                                                     ur'|[Zz]itat)[\s_]*\|.+?}}',
             # Títulos, por falsos positivos
             ur'\|\s*(title|t[íi]tulo)\s*=\s*[^\]\|]*?[\]\|]',
             # Minúsculas inciertas en meses
-            ur'(?i)(acuerdo|decreto|ley|norma(tiva)?|[óo]rden|procedimiento|resoluci[óo]n) +del? +\d\d? +del? +\S\S',
+            ur'(?i)(acuerdo'
+                ur'|decreto'
+                ur'|ley'
+                ur'|norma(tiva)?'
+                ur'|[óo]rden'
+                ur'|procedimiento'
+                ur'|resoluci[óo]n) +del? +\d\d? +del? +\S\S',
             # Parámetros de {{cita web}} inseguros
-            ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Rr]ef[-](internet|web)[^}]*(?:Alias\d?|Nombre\d|Apellido\d|Autor\d|Familia\d?|Iniciales\d?|Vinculo autor\d)\s*=.*?[|}]',
-            ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Rr]ef[-](internet|web)[^}]*\b(?:Capítulo|Contribución|ISBN|N[úu]mero|Periódico|Ref|Revista)\b\s*=.*?[|}]',
+            ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Rr]ef[-](internet|web)[^}]*(?:Alias\d?'
+                                                                                                   ur'|Nombre\d'
+                                                                                                   ur'|Apellido\d'
+                                                                                                   ur'|Autor\d'
+                                                                                                   ur'|Familia\d?'
+                                                                                                   ur'|Iniciales\d?'
+                                                                                                   ur'|Vinculo autor\d)\s*=.*?[|}]',
+            ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Rr]ef[-](internet|web)[^}]*\b(?:Capítulo'
+                                                                                                     ur'|Contribución'
+                                                                                                     ur'|ISBN'
+                                                                                                     ur'|N[úu]mero'
+                                                                                                     ur'|Periódico'
+                                                                                                     ur'|Ref'
+                                                                                                     ur'|Revista)\b\s*=.*?[|}]',
             # No editar si el artículo contiene determinadas plantillas
                 # Artículos cuya edición por bots queda prohibida según
                 # [[w:es:WP:PBOT#R9.3]]
