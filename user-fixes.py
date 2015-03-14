@@ -911,20 +911,20 @@ fixes['inva-wp-es'] = {
                 ur'|procedimiento'
                 ur'|resoluci[óo]n) +del? +\d\d? +del? +\S\S',
             # Parámetros de {{cita web}} inseguros
-            ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Rr]ef[-](internet|web)[^}]*(?:Alias\d?'
-                                                                                                   ur'|Nombre\d'
-                                                                                                   ur'|Apellido\d'
-                                                                                                   ur'|Autor\d'
-                                                                                                   ur'|Familia\d?'
-                                                                                                   ur'|Iniciales\d?'
-                                                                                                   ur'|Vinculo autor\d)\s*=.*?[|}]',
-            ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Rr]ef[-](internet|web)[^}]*\b(?:Capítulo'
-                                                                                                     ur'|Contribución'
-                                                                                                     ur'|ISBN'
-                                                                                                     ur'|N[úu]mero'
-                                                                                                     ur'|Periódico'
-                                                                                                     ur'|Ref'
-                                                                                                     ur'|Revista)\b\s*=.*?[|}]',
+            ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Rr]ef[-](internet|web)[^}]*(?:[Aa]lias\d?'
+                                                                                                   ur'|[Aa]pellido\d'
+                                                                                                   ur'|[Aa]utor\d'
+                                                                                                   ur'|[Cc]ap[íi]tulo'
+                                                                                                   ur'|[Cc]ontribuci[óo]n'
+                                                                                                   ur'|[Ff]amilia\d?'
+                                                                                                   ur'|[Ii]niciales\d?'
+                                                                                                   ur'|[Ii][Ss][Bb][Nn]'
+                                                                                                   ur'|[Nn]ombre\d'
+                                                                                                   ur'|[Nn][úu]mero'
+                                                                                                   ur'|[Pp]eri[óo]dico'
+                                                                                                   ur'|[Rr]ef'
+                                                                                                   ur'|[Rr]evista
+                                                                                                   ur'|[Vv][íi]nculo ?autor\d)\s*=.*?[|}]',
             # No editar si el artículo contiene determinadas plantillas
                 # Artículos cuya edición por bots queda prohibida según
                 # [[w:es:WP:PBOT#R9.3]]
