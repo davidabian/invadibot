@@ -40,10 +40,11 @@
 #
 # <nowiki>
 fixes['inva-wmp-prurls'] = {
-     'nocase': False,
-     'recursive': True,
-     'regex': True,
-     'msg': {
+    'dotall': False,
+    'nocase': False,
+    'recursive': True,
+    'regex': True,
+    'msg': {
           #
           #  Please add an edit summary for your project if not defined.
           #
@@ -81,54 +82,55 @@ fixes['inva-wmp-prurls'] = {
                       u' Testing links to Wikimedia projects',
      },
      'replacements': [
-          (ur'\[http://([^@:/ ]+\.)?wik(ipedia'
-                                    ur'|inews'
-                                    ur'|isource'
-                                    ur'|ibooks'
-                                    ur'|iquote'
-                                    ur'|iversity'
-                                    ur'|tionary'
-                                    ur'|idata'
-                                    ur'|ivoyage'
-                                    ur'|imedia)\.org/', ur'[//\1wik\2.org/'),
-          (ur'\[http://(www\.)?mediawiki\.org/',                                               ur'[//\1mediawiki.org/'),
-          (ur'\[http://(www\.)?wikimediafoundation\.org/',                                     ur'[//\1wikimediafoundation.org/'),
-          (ur'\[//(?:www\.)?mail\.wikipedia\.org/',                                            ur'[//lists.wikimedia.org/'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikipedia\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',   ur'[[:w:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikinews\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',    ur'[[:n:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikisource\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',  ur'[[:s:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikibooks\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',   ur'[[:b:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikiquote\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',   ur'[[:q:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikiversity\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]', ur'[[:v:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wiktionary\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',  ur'[[:wikt:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikivoyage\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',  ur'[[:wikivoyage:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?wikidata\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',                     ur'[[:d:\1|\2]]'),
-          (ur'\[//(?:www\.)?mediawiki\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',                    ur'[[:mw:\1|\2]]'),
-          (ur'\[//(?:www\.)?wikimediafoundation\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',          ur'[[:wmf:\1|\2]]'),
-          (ur'\[//(?:www\.)?meta\.wikimedia\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',              ur'[[:m:\1|\2]]'),
-          (ur'\[//(?:www\.)?outreach\.wikimedia\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',          ur'[[:outreach:\1|\2]]'),
-          (ur'\[//(?:www\.)?wikitech\.wikimedia\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',          ur'[[:wikitech:\1|\2]]'),
-          (ur'\[//(?:www\.)?commons\.wikimedia\.org/wiki/([^\s\]\?\|]+) ([^\]]+)\]',           ur'[[:commons:\1|\2]]'),
-          (ur'\[http://tools\.wmflabs\.org/',                                                  ur'[//tools.wmflabs.org/'),
+          (ur'\[http://([^@:/ ]+?\.)?wik(ipedia'
+                                     ur'|inews'
+                                     ur'|isource'
+                                     ur'|ibooks'
+                                     ur'|iquote'
+                                     ur'|iversity'
+                                     ur'|tionary'
+                                     ur'|idata'
+                                     ur'|ivoyage'
+                                     ur'|imedia)\.org([^\.])', ur'[//\1wik\2.org\3'),
+          (ur'\[http://(www\.)?mediawiki\.org',            ur'[//\1mediawiki.org'),
+          (ur'\[http://(www\.)?wikimediafoundation\.org',  ur'[//\1wikimediafoundation.org'),
+          (ur'\[http://(www\.)?tools\.wmflabs\.org',       ur'[//tools.wmflabs.org'),
+          (ur'\[//(?:www\.)?mail\.wikipedia\.org',         ur'[//lists.wikimedia.org'),
+          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikipedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',   ur'[[w:\1:\2|\3]]'),
+          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikinews\.org/wiki/([^\s\]\?\|]+) (.+?)\]',    ur'[[n:\1:\2|\3]]'),
+          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikisource\.org/wiki/([^\s\]\?\|]+) (.+?)\]',  ur'[[s:\1:\2|\3]]'),
+          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikibooks\.org/wiki/([^\s\]\?\|]+) (.+?)\]',   ur'[[b:\1:\2|\3]]'),
+          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikiquote\.org/wiki/([^\s\]\?\|]+) (.+?)\]',   ur'[[q:\1:\2|\3]]'),
+          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikiversity\.org/wiki/([^\s\]\?\|]+) (.+?)\]', ur'[[v:\1:\2|\3]]'),
+          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wiktionary\.org/wiki/([^\s\]\?\|]+) (.+?)\]',  ur'[[wikt:\1:\2|\3]]'),
+          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikivoyage\.org/wiki/([^\s\]\?\|]+) (.+?)\]',  ur'[[wikivoyage:\1:\2|\3]]'),
+          (ur'\[//(?:www\.)?wikidata\.org/wiki/([^\s\]\?\|]+) (.+?)\]',                     ur'[[d:\1|\2]]'),
+          (ur'\[//(?:www\.)?mediawiki\.org/wiki/([^\s\]\?\|]+) (.+?)\]',                    ur'[[mw:\1|\2]]'),
+          (ur'\[//(?:www\.)?wikimediafoundation\.org/wiki/([^\s\]\?\|]+) (.+?)\]',          ur'[[wmf:\1|\2]]'),
+          (ur'\[//(?:www\.)?meta\.wikimedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',              ur'[[m:\1|\2]]'),
+          (ur'\[//(?:www\.)?outreach\.wikimedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',          ur'[[outreach:\1|\2]]'),
+          (ur'\[//(?:www\.)?wikitech\.wikimedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',          ur'[[wikitech:\1|\2]]'),
+          (ur'\[//(?:www\.)?commons\.wikimedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',           ur'[[c:\1|\2]]'),
+          (ur'\[//tools\.wmflabs\.org/([^\s\]\?\|]+) (.+?)\]',                              ur'[[toollabs:\1|\2]]'),
           #
           #  One of the following lines can be uncommented and adjusted
           #  depending on the project in which this script is going to run.
           #
-          #(ur'\[\[:?m:([^\]]+)\]\]',             ur'[[:\1]]'), # Meta-Wiki
-          #(ur'\[\[:?d:([^\]]+)\]\]',             ur'[[:\1]]'), # Wikidata
-          #(ur'\[\[:?mw:([^\]]+)\]\]',            ur'[[:\1]]'), # MediaWiki
-          #(ur'\[\[:?outreach:([^\]]+)\]\]',      ur'[[:\1]]'), # Outreach
-          #(ur'\[\[:?commons:([^\]]+)\]\]',       ur'[[:\1]]'), # Commons
-          #(ur'\[\[:?wikitech:([^\]]+)\]\]',      ur'[[:\1]]'), # Wikitech
-          #(ur'\[\[:?w:en:([^\]]+)\]\]',          ur'[[:\1]]'), # Wikipedia (replace "en" by the language code)
-          #(ur'\[\[:?n:en:([^\]]+)\]\]',          ur'[[:\1]]'), # Wikinews (replace "en" by the language code)
-          #(ur'\[\[:?s:en:([^\]]+)\]\]',          ur'[[:\1]]'), # Wikisource (replace "en" by the language code)
-          #(ur'\[\[:?b:en:([^\]]+)\]\]',          ur'[[:\1]]'), # Wikibooks (replace "en" by the language code)
-          #(ur'\[\[:?q:en:([^\]]+)\]\]',          ur'[[:\1]]'), # Wikiquote (replace "en" by the language code)
-          #(ur'\[\[:?v:en:([^\]]+)\]\]',          ur'[[:\1]]'), # Wikiversity (replace "en" by the language code)
-          #(ur'\[\[:?wikt:en:([^\]]+)\]\]',       ur'[[:\1]]'), # Wiktionary (replace "en" by the language code)
-          #(ur'\[\[:?wikivoyage:en:([^\]]+)\]\]', ur'[[:\1]]'), # Wikivoyage (replace "en" by the language code)
-          #(ur'\[\[:?(?:foundation|wikimedia|wmf):([^\]]+)\]\]', ur'[[:\1]]'), # Foundation Wiki
+          #(ur'\[\[:?m:(.+?)\]\]',             ur'[[:\1]]'), # Meta-Wiki
+          #(ur'\[\[:?d:(.+?)\]\]',             ur'[[:\1]]'), # Wikidata
+          #(ur'\[\[:?mw:(.+?)\]\]',            ur'[[:\1]]'), # MediaWiki
+          #(ur'\[\[:?outreach:(.+?)\]\]',      ur'[[:\1]]'), # Outreach
+          #(ur'\[\[:?commons:(.+?)\]\]',       ur'[[:\1]]'), # Commons
+          #(ur'\[\[:?wikitech:(.+?)\]\]',      ur'[[:\1]]'), # Wikitech
+          #(ur'\[\[:?w:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikipedia (replace "en" by the language code)
+          #(ur'\[\[:?n:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikinews (replace "en" by the language code)
+          #(ur'\[\[:?s:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikisource (replace "en" by the language code)
+          #(ur'\[\[:?b:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikibooks (replace "en" by the language code)
+          #(ur'\[\[:?q:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikiquote (replace "en" by the language code)
+          #(ur'\[\[:?v:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikiversity (replace "en" by the language code)
+          #(ur'\[\[:?wikt:en:(.+?)\]\]',       ur'[[:\1]]'), # Wiktionary (replace "en" by the language code)
+          #(ur'\[\[:?wikivoyage:en:(.+?)\]\]', ur'[[:\1]]'), # Wikivoyage (replace "en" by the language code)
+          #(ur'\[\[:?(?:foundation|wikimedia|wmf):(.+?)\]\]', ur'[[:\1]]'), # Foundation Wiki
      ],
      'exceptions': {
           'title': [
