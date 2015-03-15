@@ -45,218 +45,218 @@ fixes['inva-wmp-prurls'] = {
     'recursive': True,
     'regex': True,
     'msg': {
-          #
-          #  Please add an edit summary for your project if not defined.
-          #
-          '_default': u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+        #
+        #  Please add an edit summary for your project if not defined.
+        #
+        '_default': u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                    u' Fixing links to Wikimedia projects and applying'
+                    u' protocol-relative URLs',
+
+        'an':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                    u' Apanyando vinclos enta prochectos Wikimedia y'
+                    u' aplicando adrezas URL de protocolo relativo',
+
+        'en':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                    u' Fixing links to Wikimedia projects and applying'
+                    u' protocol-relative URLs',
+
+        'es':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                    u' Arreglando enlaces a proyectos Wikimedia y aplicando'
+                    u' direcciones URL de protocolo relativo',
+
+        'fa':       u'[[:m:User:Invadibot/scope/meta-2|ربات]]: تصحیح پیوند به پروژه‌های خواهر و تبدیل کردن پیوندها به خنثی در برابر پروتکل', # --Ladsgroup
+
+        'foundation': u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
                       u' Fixing links to Wikimedia projects and applying'
                       u' protocol-relative URLs',
 
-          'an':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
-                      u' Apanyando vinclos enta prochectos Wikimedia y'
-                      u' aplicando adrezas URL de protocolo relativo',
+        'gl':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                    u' Arranxando ligazóns a proxectos Wikimedia e aplicando'
+                    u' enderezos URL de protocolo relativo',
 
-          'en':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
-                      u' Fixing links to Wikimedia projects and applying'
-                      u' protocol-relative URLs',
+        'meta':     u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                    u' Fixing links to Wikimedia projects and applying'
+                    u' protocol-relative URLs',
 
-          'es':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
-                      u' Arreglando enlaces a proyectos Wikimedia y aplicando'
-                      u' direcciones URL de protocolo relativo',
-
-          'fa':       u'[[:m:User:Invadibot/scope/meta-2|ربات]]: تصحیح پیوند به پروژه‌های خواهر و تبدیل کردن پیوندها به خنثی در برابر پروتکل', # --Ladsgroup
-
-          'foundation': u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
-                        u' Fixing links to Wikimedia projects and applying'
-                        u' protocol-relative URLs',
-
-          'gl':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
-                      u' Arranxando ligazóns a proxectos Wikimedia e aplicando'
-                      u' enderezos URL de protocolo relativo',
-
-          'meta':     u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
-                      u' Fixing links to Wikimedia projects and applying'
-                      u' protocol-relative URLs',
-
-          'test':     u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
-                      u' Testing links to Wikimedia projects',
-     },
-     'replacements': [
-          (ur'\[http://([^@:/ ]+?\.)?wik(ipedia'
-                                     ur'|inews'
-                                     ur'|isource'
-                                     ur'|ibooks'
-                                     ur'|iquote'
-                                     ur'|iversity'
-                                     ur'|tionary'
-                                     ur'|idata'
-                                     ur'|ivoyage'
-                                     ur'|imedia)\.org([^\.])', ur'[//\1wik\2.org\3'),
-          (ur'\[http://(www\.)?mediawiki\.org',            ur'[//\1mediawiki.org'),
-          (ur'\[http://(www\.)?wikimediafoundation\.org',  ur'[//\1wikimediafoundation.org'),
-          (ur'\[http://(www\.)?tools\.wmflabs\.org',       ur'[//tools.wmflabs.org'),
-          (ur'\[//(?:www\.)?mail\.wikipedia\.org',         ur'[//lists.wikimedia.org'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikipedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',   ur'[[w:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikinews\.org/wiki/([^\s\]\?\|]+) (.+?)\]',    ur'[[n:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikisource\.org/wiki/([^\s\]\?\|]+) (.+?)\]',  ur'[[s:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikibooks\.org/wiki/([^\s\]\?\|]+) (.+?)\]',   ur'[[b:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikiquote\.org/wiki/([^\s\]\?\|]+) (.+?)\]',   ur'[[q:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikiversity\.org/wiki/([^\s\]\?\|]+) (.+?)\]', ur'[[v:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wiktionary\.org/wiki/([^\s\]\?\|]+) (.+?)\]',  ur'[[wikt:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikivoyage\.org/wiki/([^\s\]\?\|]+) (.+?)\]',  ur'[[wikivoyage:\1:\2|\3]]'),
-          (ur'\[//(?:www\.)?wikidata\.org/wiki/([^\s\]\?\|]+) (.+?)\]',                     ur'[[d:\1|\2]]'),
-          (ur'\[//(?:www\.)?mediawiki\.org/wiki/([^\s\]\?\|]+) (.+?)\]',                    ur'[[mw:\1|\2]]'),
-          (ur'\[//(?:www\.)?wikimediafoundation\.org/wiki/([^\s\]\?\|]+) (.+?)\]',          ur'[[wmf:\1|\2]]'),
-          (ur'\[//(?:www\.)?meta\.wikimedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',              ur'[[m:\1|\2]]'),
-          (ur'\[//(?:www\.)?outreach\.wikimedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',          ur'[[outreach:\1|\2]]'),
-          (ur'\[//(?:www\.)?wikitech\.wikimedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',          ur'[[wikitech:\1|\2]]'),
-          (ur'\[//(?:www\.)?commons\.wikimedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',           ur'[[c:\1|\2]]'),
-          (ur'\[//tools\.wmflabs\.org/([^\s\]\?\|]+) (.+?)\]',                              ur'[[toollabs:\1|\2]]'),
-          #
-          #  One of the following lines can be uncommented and adjusted
-          #  depending on the project in which this script is going to run.
-          #
-          #(ur'\[\[:?m:(.+?)\]\]',             ur'[[:\1]]'), # Meta-Wiki
-          #(ur'\[\[:?d:(.+?)\]\]',             ur'[[:\1]]'), # Wikidata
-          #(ur'\[\[:?mw:(.+?)\]\]',            ur'[[:\1]]'), # MediaWiki
-          #(ur'\[\[:?outreach:(.+?)\]\]',      ur'[[:\1]]'), # Outreach
-          #(ur'\[\[:?commons:(.+?)\]\]',       ur'[[:\1]]'), # Commons
-          #(ur'\[\[:?wikitech:(.+?)\]\]',      ur'[[:\1]]'), # Wikitech
-          #(ur'\[\[:?w:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikipedia (replace "en" by the language code)
-          #(ur'\[\[:?n:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikinews (replace "en" by the language code)
-          #(ur'\[\[:?s:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikisource (replace "en" by the language code)
-          #(ur'\[\[:?b:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikibooks (replace "en" by the language code)
-          #(ur'\[\[:?q:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikiquote (replace "en" by the language code)
-          #(ur'\[\[:?v:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikiversity (replace "en" by the language code)
-          #(ur'\[\[:?wikt:en:(.+?)\]\]',       ur'[[:\1]]'), # Wiktionary (replace "en" by the language code)
-          #(ur'\[\[:?wikivoyage:en:(.+?)\]\]', ur'[[:\1]]'), # Wikivoyage (replace "en" by the language code)
-          #(ur'\[\[:?(?:foundation|wikimedia|wmf):(.+?)\]\]', ur'[[:\1]]'), # Foundation Wiki
-     ],
-     'exceptions': {
-          'title': [
-              '\.(css|js|php|py|sh)',
-              '([Bb]lack'
-               '|[Gg]r[ae]y'
-               '|[Ww]hite'
-               ')'
-               '[ _]?[Ll]ist',
-              '([Ss]abliera'
-               '|[Ss]and[ _]?('
-                '[Bb]ox'
-                '|[Pp]ut'
-                '|[Cc]haschte'
-                '|[Kk]assen?'
-                '|[Kk]assinn'
-                '|[Ll][aå]dan'
-                ')'
-               '|('
-                '[Zz]ona'
-                '|[Pp][aáà](g|ch)ina'
-                ')[ _]?de[ _]?('
-                 '[Pp]r(ue[bv]as?'
-                 '|o[bv][ae]s'
-                 '|e[bv]atinas?'
-                 ')|[Tt]estes?'
-                ')'
-               ')',
-              # for Persian, no need to make it very general --Ladsgroup
-              u'(صفحه[ _]تمرین|گودال)',
-          ],
-          'inside': [
-               (ur'\[//(www\.)?([^@:/ (www)]+)\.[a-z]+\.org/wiki/[^\s\]\?\|]+ (.*?\[\[.*?\]\].*?)+\]'),
-               (ur'\[//[^\s\]]{400}.*?\]'),
-               (ur'\[http://(www\.)?(apt'
-                                 ur'|bayes'
-                                 ur'|bayle'
-                                 ur'|brewster'
-                                 ur'|commons\.prototype'
-                                 ur'|commonsprototype\.tesla\.usability'
-                                 ur'|cs'
-                                 ur'|cz'
-                                 ur'|dataset2'
-                                 ur'|de\.prototype'
-                                 ur'|download'
-                                 ur'|dumps'
-                                 ur'|ekrem'
-                                 ur'|emery'
-                                 ur'|en\.prototype'
-                                 ur'|ersch'
-                                 ur'|etherpad'
-                                 ur'|fenari'
-                                 ur'|flaggedrevssandbox'
-                                 ur'|flgrevsandbox'
-                                 ur'|gallium|ganglia'
-                                 ur'|ganglia3'
-                                 ur'|harmon'
-                                 ur'|hume'
-                                 ur'|ipv4\.labs'
-                                 ur'|ipv6and4\.labs'
-                                 ur'|jobs'
-                                 ur'|m'
-                                 ur'|mlqt\.tesla\.usability'
-                                 ur'|mobile\.tesla\.usability'
-                                 ur'|nagios'
-                                 ur'|noboard\.chapters'
-                                 ur'|noc'
-                                 ur'|observium'
-                                 ur'|oldusability'
-                                 ur'|project2'
-                                 ur'|prototype'
-                                 ur'|results\.labs'
-                                 ur'|search'
-                                 ur'|sitemap'
-                                 ur'|snapshot3'
-                                 ur'|stafford'
-                                 ur'|stats'
-                                 ur'|status'
-                                 ur'|svn'
-                                 ur'|test\.prototype'
-                                 ur'|torrus'
-                                 ur'|ubuntu'
-                                 ur'|wiki-mail'
-                                 ur'|yongle)\.wikimedia\.org'),
-               (ur'\[http://(www\.)?(arbcom\.[a-z]+'
-                                 ur'|download'
-                                 ur'|m'
-                                 ur'|static'
-                                 ur'|wg\.[a-z]+)\.wikipedia\.org'),
-               (ur'\[http://(www\.)?[^@:/]+\.m\.wikipedia\.org'),
-               # Preventing test.wikipedia → [[w:test:]]
-               (ur'\[//(www\.)?(ten|test|test2)\.wikipedia\.org'),
-          ],
-         'inside-tags': [
-                #
-                #  You can occasionally comment some of these exception tags 
-                #  under your own risk.
-                #
-                'blockquote',
-                'categorytree',
-                'charinsert',
-                'comment',
-                'dynamicpagelist',
-                'gallery',
-                'hiero',
-                'hyperlink',
-                'imagemap',
-                'indicator',
-                'inputbox',
-                'invoke',
-                'math',
-                'nowiki',
-                'pagelist',
-                'pagequality',
-                'pages',
-                'poem',
-                'pre',
-                'property',
-                'score',
-                'section',
-                'source',
-                'syntaxhighlight',
-                'templatedata',
-                'timeline',
-          ]
-     }
+        'test':     u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+                    u' Testing links to Wikimedia projects',
+    },
+    'replacements': [
+        (ur'\[http://([^@:/ ]+?\.)?wik(ipedia'
+                                   ur'|inews'
+                                   ur'|isource'
+                                   ur'|ibooks'
+                                   ur'|iquote'
+                                   ur'|iversity'
+                                   ur'|tionary'
+                                   ur'|idata'
+                                   ur'|ivoyage'
+                                   ur'|imedia)\.org([^\.])', ur'[//\1wik\2.org\3'),
+        (ur'\[http://(www\.)?mediawiki\.org',            ur'[//\1mediawiki.org'),
+        (ur'\[http://(www\.)?wikimediafoundation\.org',  ur'[//\1wikimediafoundation.org'),
+        (ur'\[http://(www\.)?tools\.wmflabs\.org',       ur'[//tools.wmflabs.org'),
+        (ur'\[//(?:www\.)?mail\.wikipedia\.org',         ur'[//lists.wikimedia.org'),
+        (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikipedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',   ur'[[w:\1:\2|\3]]'),
+        (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikinews\.org/wiki/([^\s\]\?\|]+) (.+?)\]',    ur'[[n:\1:\2|\3]]'),
+        (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikisource\.org/wiki/([^\s\]\?\|]+) (.+?)\]',  ur'[[s:\1:\2|\3]]'),
+        (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikibooks\.org/wiki/([^\s\]\?\|]+) (.+?)\]',   ur'[[b:\1:\2|\3]]'),
+        (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikiquote\.org/wiki/([^\s\]\?\|]+) (.+?)\]',   ur'[[q:\1:\2|\3]]'),
+        (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikiversity\.org/wiki/([^\s\]\?\|]+) (.+?)\]', ur'[[v:\1:\2|\3]]'),
+        (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wiktionary\.org/wiki/([^\s\]\?\|]+) (.+?)\]',  ur'[[wikt:\1:\2|\3]]'),
+        (ur'\[//(?:www\.)?([^@:/ (www)]+)\.wikivoyage\.org/wiki/([^\s\]\?\|]+) (.+?)\]',  ur'[[wikivoyage:\1:\2|\3]]'),
+        (ur'\[//(?:www\.)?wikidata\.org/wiki/([^\s\]\?\|]+) (.+?)\]',                     ur'[[d:\1|\2]]'),
+        (ur'\[//(?:www\.)?mediawiki\.org/wiki/([^\s\]\?\|]+) (.+?)\]',                    ur'[[mw:\1|\2]]'),
+        (ur'\[//(?:www\.)?wikimediafoundation\.org/wiki/([^\s\]\?\|]+) (.+?)\]',          ur'[[wmf:\1|\2]]'),
+        (ur'\[//(?:www\.)?meta\.wikimedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',              ur'[[m:\1|\2]]'),
+        (ur'\[//(?:www\.)?outreach\.wikimedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',          ur'[[outreach:\1|\2]]'),
+        (ur'\[//(?:www\.)?wikitech\.wikimedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',          ur'[[wikitech:\1|\2]]'),
+        (ur'\[//(?:www\.)?commons\.wikimedia\.org/wiki/([^\s\]\?\|]+) (.+?)\]',           ur'[[c:\1|\2]]'),
+        (ur'\[//tools\.wmflabs\.org/([^\s\]\?\|]+) (.+?)\]',                              ur'[[toollabs:\1|\2]]'),
+        #
+        #  One of the following lines can be uncommented and adjusted
+        #  depending on the project in which this script is going to run.
+        #
+        #(ur'\[\[:?m:(.+?)\]\]',             ur'[[:\1]]'), # Meta-Wiki
+        #(ur'\[\[:?d:(.+?)\]\]',             ur'[[:\1]]'), # Wikidata
+        #(ur'\[\[:?mw:(.+?)\]\]',            ur'[[:\1]]'), # MediaWiki
+        #(ur'\[\[:?outreach:(.+?)\]\]',      ur'[[:\1]]'), # Outreach
+        #(ur'\[\[:?commons:(.+?)\]\]',       ur'[[:\1]]'), # Commons
+        #(ur'\[\[:?wikitech:(.+?)\]\]',      ur'[[:\1]]'), # Wikitech
+        #(ur'\[\[:?w:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikipedia (replace "en" by the language code)
+        #(ur'\[\[:?n:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikinews (replace "en" by the language code)
+        #(ur'\[\[:?s:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikisource (replace "en" by the language code)
+        #(ur'\[\[:?b:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikibooks (replace "en" by the language code)
+        #(ur'\[\[:?q:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikiquote (replace "en" by the language code)
+        #(ur'\[\[:?v:en:(.+?)\]\]',          ur'[[:\1]]'), # Wikiversity (replace "en" by the language code)
+        #(ur'\[\[:?wikt:en:(.+?)\]\]',       ur'[[:\1]]'), # Wiktionary (replace "en" by the language code)
+        #(ur'\[\[:?wikivoyage:en:(.+?)\]\]', ur'[[:\1]]'), # Wikivoyage (replace "en" by the language code)
+        #(ur'\[\[:?(?:foundation|wikimedia|wmf):(.+?)\]\]', ur'[[:\1]]'), # Foundation Wiki
+    ],
+    'exceptions': {
+        'title': [
+            '\.(css|js|php|py|sh)',
+            '([Bb]lack'
+             '|[Gg]r[ae]y'
+             '|[Ww]hite'
+             ')'
+             '[ _]?[Ll]ist',
+            '([Ss]abliera'
+             '|[Ss]and[ _]?('
+              '[Bb]ox'
+              '|[Pp]ut'
+              '|[Cc]haschte'
+              '|[Kk]assen?'
+              '|[Kk]assinn'
+              '|[Ll][aå]dan'
+              ')'
+             '|('
+              '[Zz]ona'
+              '|[Pp][aáà](g|ch)ina'
+              ')[ _]?de[ _]?('
+               '[Pp]r(ue[bv]as?'
+               '|o[bv][ae]s'
+               '|e[bv]atinas?'
+               ')|[Tt]estes?'
+              ')'
+             ')',
+            # for Persian, no need to make it very general --Ladsgroup
+            u'(صفحه[ _]تمرین|گودال)',
+        ],
+        'inside': [
+            (ur'\[//(www\.)?([^@:/ (www)]+)\.[a-z]+\.org/wiki/[^\s\]\?\|]+ (.*?\[\[.*?\]\].*?)+\]'),
+            (ur'\[//[^\s\]]{400}.*?\]'),
+            (ur'\[http://(www\.)?(apt'
+                              ur'|bayes'
+                              ur'|bayle'
+                              ur'|brewster'
+                              ur'|commons\.prototype'
+                              ur'|commonsprototype\.tesla\.usability'
+                              ur'|cs'
+                              ur'|cz'
+                              ur'|dataset2'
+                              ur'|de\.prototype'
+                              ur'|download'
+                              ur'|dumps'
+                              ur'|ekrem'
+                              ur'|emery'
+                              ur'|en\.prototype'
+                              ur'|ersch'
+                              ur'|etherpad'
+                              ur'|fenari'
+                              ur'|flaggedrevssandbox'
+                              ur'|flgrevsandbox'
+                              ur'|gallium|ganglia'
+                              ur'|ganglia3'
+                              ur'|harmon'
+                              ur'|hume'
+                              ur'|ipv4\.labs'
+                              ur'|ipv6and4\.labs'
+                              ur'|jobs'
+                              ur'|m'
+                              ur'|mlqt\.tesla\.usability'
+                              ur'|mobile\.tesla\.usability'
+                              ur'|nagios'
+                              ur'|noboard\.chapters'
+                              ur'|noc'
+                              ur'|observium'
+                              ur'|oldusability'
+                              ur'|project2'
+                              ur'|prototype'
+                              ur'|results\.labs'
+                              ur'|search'
+                              ur'|sitemap'
+                              ur'|snapshot3'
+                              ur'|stafford'
+                              ur'|stats'
+                              ur'|status'
+                              ur'|svn'
+                              ur'|test\.prototype'
+                              ur'|torrus'
+                              ur'|ubuntu'
+                              ur'|wiki-mail'
+                              ur'|yongle)\.wikimedia\.org'),
+            (ur'\[http://(www\.)?(arbcom\.[a-z]+'
+                              ur'|download'
+                              ur'|m'
+                              ur'|static'
+                              ur'|wg\.[a-z]+)\.wikipedia\.org'),
+            (ur'\[http://(www\.)?[^@:/]+\.m\.wikipedia\.org'),
+            # Preventing test.wikipedia → [[w:test:]]
+            (ur'\[//(www\.)?(ten|test|test2)\.wikipedia\.org'),
+        ],
+        'inside-tags': [
+            #
+            #  You can occasionally comment some of these exception tags 
+            #  under your own risk.
+            #
+            'blockquote',
+            'categorytree',
+            'charinsert',
+            'comment',
+            'dynamicpagelist',
+            'gallery',
+            'hiero',
+            'hyperlink',
+            'imagemap',
+            'indicator',
+            'inputbox',
+            'invoke',
+            'math',
+            'nowiki',
+            'pagelist',
+            'pagequality',
+            'pages',
+            'poem',
+            'pre',
+            'property',
+            'score',
+            'section',
+            'source',
+            'syntaxhighlight',
+            'templatedata',
+            'timeline',
+        ]
+    }
 }
 # </nowiki>
 # ============================================================================ #
