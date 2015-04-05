@@ -294,7 +294,7 @@ fixes['inva-wp-es'] = {
         # Pasar a {{cita publicación}}
         (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]it[ae]r?[ _]*journal|[Cc]it(?:ar|e)[ _]*publicaci[óo]n?|[Cc]itar?[ _]*revista|[Rr]ef[- ]publicaci[óo]n?)([\s_]*[}\|])', ur'{{cita publicación\1'),
         # Pasar a {{cita vídeo}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]it[ae]r?[ _]*video|[Cc]it(:ar|e)[ _]*vídeo|[Cc]it[ae]r?[ _]*[Aa][Vv][ _]*[Mm]edia)([\s_]*[}\|])', ur'{{cita vídeo\1'),
+        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]it[ae]r?[ _]*video|[Cc]it(?:ar|e)[ _]*vídeo|[Cc]it[ae]r?[ _]*[Aa][Vv][ _]*[Mm]edia)([\s_]*[}\|])', ur'{{cita vídeo\1'),
         # Pasar a {{cita web}}
         (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]ite[ _-]?web(?:site)?|[Cc]itar[ _]web|[Ww]eb[ _-]cite|[Ll]ien[ _-]web|[Rr]ef[ _-](?:internet|web))([\s_]*[}\|])', ur'{{cita web\1'),
         
