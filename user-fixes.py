@@ -48,38 +48,42 @@ fixes['inva-wmp-prurls'] = {
         #
         #  Please add an edit summary for your project if not defined.
         #
-        '_default': u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+        '_default': u'[[m:User:Invadibot/scope/meta-2|Bot]]:'
                     u' Fixing links to Wikimedia projects and applying'
                     u' protocol-relative URLs',
 
-        'an':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+        'an':       u'[[m:User:Invadibot/scope/meta-2|Bot]]:'
                     u' Apanyando vinclos enta prochectos Wikimedia y'
                     u' aplicando adrezas URL de protocolo relativo',
 
-        'en':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+        'en':       u'[[m:User:Invadibot/scope/meta-2|Bot]]:'
                     u' Fixing links to Wikimedia projects and applying'
                     u' protocol-relative URLs',
 
-        'es':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+        'es':       u'[[m:User:Invadibot/scope/meta-2|Bot]]:'
                     u' Arreglando enlaces a proyectos Wikimedia y aplicando'
                     u' direcciones URL de protocolo relativo',
 
-        'fa':       u'[[:m:User:Invadibot/scope/meta-2|ربات]]: تصحیح پیوند به پروژه‌های خواهر و تبدیل کردن پیوندها به خنثی در برابر پروتکل', # --Ladsgroup
+        'fa':       u'[[m:User:Invadibot/scope/meta-2|ربات]]: تصحیح پیوند به پروژه‌های خواهر و تبدیل کردن پیوندها به خنثی در برابر پروتکل', # --Ladsgroup
 
-        'foundation': u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+        'foundation': u'[[m:User:Invadibot/scope/meta-2|Bot]]:'
                       u' Fixing links to Wikimedia projects and applying'
                       u' protocol-relative URLs',
 
-        'gl':       u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+        'gl':       u'[[m:User:Invadibot/scope/meta-2|Bot]]:'
                     u' Arranxando ligazóns a proxectos Wikimedia e aplicando'
                     u' enderezos URL de protocolo relativo',
 
-        'meta':     u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+        'meta':     u'[[m:User:Invadibot/scope/meta-2|Bot]]:'
                     u' Fixing links to Wikimedia projects and applying'
                     u' protocol-relative URLs',
 
-        'test':     u'[[:m:User:Invadibot/scope/meta-2|Bot]]:'
+        'test':     u'[[m:User:Invadibot/scope/meta-2|Bot]]:'
                     u' Testing links to Wikimedia projects',
+
+        'wmf':      u'[[m:User:Invadibot/scope/meta-2|Bot]]:'
+                    u' Fixing links to Wikimedia projects and applying'
+                    u' protocol-relative URLs',
     },
     'replacements': [
         (ur'\[http://([^@:/ ]+?\.)?wik(ipedia'
