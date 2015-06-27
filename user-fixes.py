@@ -761,113 +761,113 @@ fixes['inva-wp-es'] = {
 
         # Estandarizar secciones
             # Álbumes
-            (ur'(?i)\n=(=*\s*)([áaà]lbu[mn]e?s)(\s*)=', ur'=\1Álbumes\3='),
+            (ur'(?i)\n=(=*\s*)([áaà]lbu[mn]e?s)(\s*)=', ur'\n=\1Álbumes\3='),
             # Arquitectura
             (ur'(?i)\n=(=*\s*)(architecture'
-                           ur'|arquitect[úu]ra)(\s*)=', ur'=\1Arquitectura\3='),
+                           ur'|arquitect[úu]ra)(\s*)=', ur'\n=\1Arquitectura\3='),
             # Arte
-            (ur'(?i)\n=(=*\s*)(arte?)(\s*)=', ur'=\1Arte\3='),
+            (ur'(?i)\n=(=*\s*)(arte?)(\s*)=', ur'\n=\1Arte\3='),
             # Bibliografía
             (ur'(?i)\n=(=*\s*)(bibliography'
-                           ur'|bibl[íi]?ograf[íiì]as?)(\s*)=', ur'=\1Bibliografía\3='),
+                           ur'|bibl[íi]?ograf[íiì]as?)(\s*)=', ur'\n=\1Bibliografía\3='),
             # Biografía
             (ur'(?i)\n=(=*\s*)(b[íi][óo]graf[ìií]a'
-                           ur'|biography)(\s*)=', ur'=\1Biografía\3='),
+                           ur'|biography)(\s*)=', ur'\n=\1Biografía\3='),
             # Características
             (ur'(?i)\n=(=*\s*)(car[áaà]cter[íiì]sticas'
-                           ur'|features)(\s*)=', ur'=\1Características\3='),
+                           ur'|features)(\s*)=', ur'\n=\1Características\3='),
             # Carrera
             (ur'(?i)\n=(=*\s*)(carr[ée]ra'
-                           ur'|career)(\s*)=', ur'=\1Carrera\3='),
+                           ur'|career)(\s*)=', ur'\n=\1Carrera\3='),
             # Carrera artística
-            (ur'(?i)\n=(=*\s*)carr[ée]ra(\s+)art[íiì]stica(\s*)=', ur'=\1Carrera\2artística\3='),
-            (ur'(?i)\n=(=*\s*)(artistic\s+career|career\s+in\s+art)(\s*)=', ur'=\1Carrera artística\3='),
+            (ur'(?i)\n=(=*\s*)carr[ée]ra(\s+)art[íiì]stica(\s*)=', ur'\n=\1Carrera\2artística\3='),
+            (ur'(?i)\n=(=*\s*)(artistic\s+career|career\s+in\s+art)(\s*)=', ur'\n=\1Carrera artística\3='),
             # Crítica
-            (ur'(?i)\n=(=*\s*)(cr[íiì]tica)(\s*)=', ur'=\1Crítica\3='),
+            (ur'(?i)\n=(=*\s*)(cr[íiì]tica)(\s*)=', ur'\n=\1Crítica\3='),
             # Críticas
-            (ur'(?i)\n=(=*\s*)(cr[íiì]ticas)(\s*)=', ur'=\1Críticas\3='),
+            (ur'(?i)\n=(=*\s*)(cr[íiì]ticas)(\s*)=', ur'\n=\1Críticas\3='),
             # Cultura
-            (ur'(?i)\n=(=*\s*)(cultur[ae])(\s*)=', ur'=\1Cultura\3='),
+            (ur'(?i)\n=(=*\s*)(cultur[ae])(\s*)=', ur'\n=\1Cultura\3='),
             # Demografía
             (ur'(?i)\n=(=*\s*)(demograf[íiì]a'
-                           ur'|demography)(\s*)=', ur'=\1Demografía\3='),
+                           ur'|demography)(\s*)=', ur'\n=\1Demografía\3='),
             # Descripción
             (ur'(?i)\n=(=*\s*)(description'
-                           ur'|descrip[cs]i[óoò]n)(\s*)=', ur'=\1Descripción\3='),
+                           ur'|descrip[cs]i[óoò]n)(\s*)=', ur'\n=\1Descripción\3='),
             # Discografía
             (ur'(?i)\n=(=*\s*)(discograf[íiì]a'
-                           ur'|discography)(\s*)=', ur'=\1Discografía\3='),
+                           ur'|discography)(\s*)=', ur'\n=\1Discografía\3='),
             # Distribución
             (ur'(?i)\n=(=*\s*)(distribution'
-                           ur'|distribu[cs]i[óoò]n)(\s*)=', ur'=\1Distribución\3='),
+                           ur'|distribu[cs]i[óoò]n)(\s*)=', ur'\n=\1Distribución\3='),
             # Economía
             (ur'(?i)\n=(=*\s*)(econom[íiì]a'
-                           ur'|economy)(\s*)=', ur'=\1Economía\3='),
+                           ur'|economy)(\s*)=', ur'\n=\1Economía\3='),
             # Educación
-            (ur'(?i)\n=(=*\s*)(educa[cst]i[óoò]n)(\s*)=', ur'=\1Educación\3='),
+            (ur'(?i)\n=(=*\s*)(educa[cst]i[óoò]n)(\s*)=', ur'\n=\1Educación\3='),
             # Enlaces externos
             (ur'(?i)\n=(=*\s*)([bv][íiì]nc[úu]?l[óo]s?\s+e[xs]t[ée]rnos?'
                            ur'|[ée]nla[cs][ée]s?\s+e[xs]t[ée]rnos?'
                            ur'|external\s+links?'
                            ur'|l[íi]gas?\s+e[xs]t[ée]rn[oa]s?'
-                           ur'|l[íi]nks?\s+e[xs]t[ée]rn[oa]s?)(\s*)=', ur'=\1Enlaces externos\3='),
+                           ur'|l[íi]nks?\s+e[xs]t[ée]rn[oa]s?)(\s*)=', ur'\n=\1Enlaces externos\3='),
             # Etimología
             (ur'(?i)\n=(=*\s*)(etimolog[íiì]a'
-                           ur'|et[iy]mology)(\s*)=', ur'=\1Etimología\3='),
+                           ur'|et[iy]mology)(\s*)=', ur'\n=\1Etimología\3='),
             # Filmografía
             (ur'(?i)\n=(=*\s*)(filmograf[ìií]a'
-                           ur'|filmography)(\s*)=', ur'=\1Filmografía\3='),
+                           ur'|filmography)(\s*)=', ur'\n=\1Filmografía\3='),
             # Gobierno
             (ur'(?i)\n=(=*\s*)(gobierno'
-                           ur'|government)(\s*)=', ur'=\1Gobierno\3='),
+                           ur'|government)(\s*)=', ur'\n=\1Gobierno\3='),
             # Historia
             (ur'(?i)\n=(=*\s*)(hist[óo]ria'
-                           ur'|history)(\s*)=', ur'=\1Historia\3='),
+                           ur'|history)(\s*)=', ur'\n=\1Historia\3='),
             # Infancia
             (ur'(?i)\n=(=*\s*)(inf[áa]n[cs]ia'
-                           ur'|childhood)(\s*)=', ur'=\1Infancia\3='),
+                           ur'|childhood)(\s*)=', ur'\n=\1Infancia\3='),
             # Infraestructura
-            (ur'(?i)\n=(=*\s*)(infrae?structur[ae])(\s*)=', ur'=\1Infraestructura\3='),
+            (ur'(?i)\n=(=*\s*)(infrae?structur[ae])(\s*)=', ur'\n=\1Infraestructura\3='),
             # Localización
-            (ur'(?i)\n=(=*\s*)(locali[zs]a[cst]i[óoò]n)(\s*)=', ur'=\1Localización\3='),
+            (ur'(?i)\n=(=*\s*)(locali[zs]a[cst]i[óoò]n)(\s*)=', ur'\n=\1Localización\3='),
             # Muerte
             (ur'(?i)\n=(=*\s*)(death'
-                           ur'|muerte)(\s*)=', ur'=\1Muerte\3='),
+                           ur'|muerte)(\s*)=', ur'\n=\1Muerte\3='),
             # Música
             (ur'(?i)\n=(=*\s*)(m[úuù]sica'
-                           ur'|music)(\s*)=', ur'=\1Música\3='),
+                           ur'|music)(\s*)=', ur'\n=\1Música\3='),
             # Notas y referencias
             (ur'(?i)\n=(=*\s*)(notas\s+y\s+refer[ée]n[cs]ias'
                            ur'|notes\s+and\s+references'
                            ur'|refer[ée]n[cs]ias\s+y\s+notas'
-                           ur'|references\s+and\s+notes)(\s*)=', ur'=\1Notas y referencias\3='),
+                           ur'|references\s+and\s+notes)(\s*)=', ur'\n=\1Notas y referencias\3='),
             # Obra
-            (ur'(?i)\n=(=*\s*)(obra)(\s*)=', ur'=\1Obra\3='),
+            (ur'(?i)\n=(=*\s*)(obra)(\s*)=', ur'\n=\1Obra\3='),
             # Población
             (ur'(?i)\n=(=*\s*)(pobla[cs]i[óoò]n'
-                           ur'|population)(\s*)=', ur'=\1Población\3='),
+                           ur'|population)(\s*)=', ur'\n=\1Población\3='),
             # Premios
             (ur'(?i)\n=(=*\s*)(pr[ée]mios'
-                           ur'|awards)(\s*)=', ur'=\1Premios\3='),
+                           ur'|awards)(\s*)=', ur'\n=\1Premios\3='),
             # Premios y reconocimientos
             (ur'(?i)\n=(=*\s*)(pr[ée]mios\s+y\s+recono[cs]imi[ée]ntos'
-                           ur'|awards\s+and\s+honors)(\s*)=', ur'=\1Premios y reconocimientos\3='),
+                           ur'|awards\s+and\s+honors)(\s*)=', ur'\n=\1Premios y reconocimientos\3='),
             # Referencias
             (ur'(?i)\n=(=*\s*)(refer[éèe]n[cs]ias'
                            ur'|references?'
-                           ur'|einzelnachweise)(\s*)=', ur'=\1Referencias\3='),
+                           ur'|einzelnachweise)(\s*)=', ur'\n=\1Referencias\3='),
             # Ubicación
-            (ur'(?i)\n=(=*\s*)(ubica[cst]i[óoò]n)(\s*)=', ur'=\1Ubicación\3='),
+            (ur'(?i)\n=(=*\s*)(ubica[cst]i[óoò]n)(\s*)=', ur'\n=\1Ubicación\3='),
             # Últimos años
             (ur'(?i)\n=(=*\s*)(last +years'
-                           ur'|[úuù]ltimos +años)(\s*)=', ur'=\1Últimos años\3='),
+                           ur'|[úuù]ltimos +años)(\s*)=', ur'\n=\1Últimos años\3='),
             # Véase también
             (ur'(?i)\n=(=*\s*)(see\s+also'
                            ur'|[vb]er\s+t[áa][nm][bv]i[éeè]n'
                            ur'|m[íiì]r[ea](?:se)?\s+ta[nm][vb]?i[éeè]n'
                            ur'|[vb][éeè]a?n?[cs]e\s+t[aá][nm][vb]i[éeè]n'
                            ur'|v[éeè]a\s+ta[nm][vb]i[éeè]n'
-                           ur'|art[íiì]cu?los?\s+[Rr]elacion[áa]dos?)(\s*)=', ur'=\1Véase también\3='),
+                           ur'|art[íiì]cu?los?\s+[Rr]elacion[áa]dos?)(\s*)=', ur'\n=\1Véase también\3='),
             
     ],
     'exceptions': {
