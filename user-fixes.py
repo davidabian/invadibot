@@ -277,6 +277,26 @@ fixes['inva-wmp-prurls'] = {
 #        traducciones y arreglos de formato seguros en Wikipedia en español.
 #
 # <nowiki>
+
+# NC (nocase) requiere (?i)
+
+P_INICIO         = (ur"{{[\s_]*(?:[Pp]lantilla[\s_]*:"
+                              ur"|[Tt]emplate[\s_]*:"
+                    ur")?[\s_]*")
+P_INICIO_NC      = (ur"{{[\s_]*(?:plantilla[\s_]*:"
+                              ur"|template[\s_]*:"
+                    ur")?[\s_]*")
+P_CITA_INICIO    = (ur"%s[Cc]ita[ _](?:libro"
+                                   ur"|noticia"
+                                   ur"|publicación"
+                                   ur"|web"
+                    ur")[^}]*?\|\s*") % P_INICIO
+P_CITA_INICIO_NC = (ur"%scita[ _](?:libro"
+                                ur"|noticia"
+                                ur"|publicación"
+                                ur"|web"
+                    ur")[^}]*?\|\s*") % P_INICIO_NC
+
 fixes['inva-wp-es'] = {
     'nocase': False,
     'recursive': True,
@@ -289,249 +309,261 @@ fixes['inva-wp-es'] = {
     'replacements': [
         
         # Retirada de la plantilla de solicitud de intervención con Invadibot
-        (ur'(?i){{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*invadibot[^}]*?}}\s*(.)', ur'\1'),
+        (ur'(?i)%sinvadibot[^}]*?}}\s*(.)' % P_INICIO_NC, ur'\1'),
 
         # Pasar a {{cita libro}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]it[ae][ _]*book([\s_]*[}\|])', ur'{{cita libro\1'),
+        (ur'%s[Cc]it[ae][ _]*book([\s_]*[}\|])' % P_INICIO, ur'{{cita libro\1'),
         # Pasar a {{cita noticia}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]it[ae][\s_]*[Nn]ews([\s_]*[}\|])', ur'{{cita noticia\1'),
+        (ur'%s[Cc]it[ae][\s_]*[Nn]ews([\s_]*[}\|])' % P_INICIO, ur'{{cita noticia\1'),
         # Pasar a {{cita publicación}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]it[ae]r?[ _]*journal|[Cc]it(?:ar|e)[ _]*publicaci[óo]n?|[Cc]itar?[ _]*revista|[Rr]ef[- ]publicaci[óo]n?)([\s_]*[}\|])', ur'{{cita publicación\1'),
+        ((ur'%s(?:[Cc]it[ae]r?[ _]*journal'
+              ur'|[Cc]it(?:ar|e)[ _]*publicaci[óo]n?'
+              ur'|[Cc]itar?[ _]*revista'
+              ur'|[Rr]ef[- ]publicaci[óo]n?'
+              ur')([\s_]*[}\|])') % P_INICIO, ur'{{cita publicación\1'),
         # Pasar a {{cita vídeo}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]it[ae]r?[ _]*video|[Cc]it(?:ar|e)[ _]*vídeo|[Cc]it[ae]r?[ _]*[Aa][Vv][ _]*[Mm]edia)([\s_]*[}\|])', ur'{{cita vídeo\1'),
+        ((ur'%s(?:[Cc]it[ae]r?[ _]*video'
+              ur'|[Cc]it(?:ar|e)[ _]*vídeo'
+              ur'|[Cc]it[ae]r?[ _]*[Aa][Vv][ _]*[Mm]edia'
+              ur')([\s_]*[}\|])') % P_INICIO, ur'{{cita vídeo\1'),
         # Pasar a {{cita web}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Cc]ite[ _-]?web(?:site)?|[Cc]itar[ _]web|[Ww]eb[ _-]cite|[Ll]ien[ _-]web|[Rr]ef[ _-](?:internet|web))([\s_]*[}\|])', ur'{{cita web\1'),
+        ((ur'%s(?:[Cc]ite[ _-]?web(?:site)?'
+              ur'|[Cc]itar[ _]web'
+              ur'|[Ww]eb[ _-]cite'
+              ur'|[Ll]ien[ _-]web'
+              ur'|[Rr]ef[ _-](?:internet|web)'
+              ur')([\s_]*[}\|])') % P_INICIO, ur'{{cita web\1'),
         
         # Traducción y estandarización indiscriminadas de parámetros para citas
         # libro, noticia, publicación y web
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]ccessdate(\s*=.*?})', ur'\1fechaacceso\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]ccessmonth(\s*=.*?})', ur'\1mesacceso\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]ccessmonthday(\s*=.*?})', ur'\1mesacceso\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]cces+o(\s*=.*?})', ur'\1fechaacceso\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]ccessyear(\s*=.*?})', ur'\1añoacceso\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]ny(\s*=.*?})', ur'\1año\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]rchivedate(\s*=.*?})', ur'\1fechaarchivo\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]rchiveurl(\s*=.*?})', ur'\1urlarchivo\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]rxiudata(\s*=.*?})', ur'\1fechaarchivo\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]rxiuurl(\s*=.*?})', ur'\1urlarchivo\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]uthor(\d{0,2}\s*=.*?})', ur'\1autor\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]uthorlink(\d{0,2}\s*=.*?})', ur'\1enlaceautor\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Aa]utorenllaç(\d{0,2}\s*=.*?})', ur'\1enlaceautor\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Cc]apítol(\s*=.*?})', ur'\1capítulo\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Cc]hapter(\s*=.*?})', ur'\1capítulo\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Cc]hapterurl(\s*=.*?})', ur'\1urlcapítulo\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Cc]itació(\s*=.*?})', ur'\1cita\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Cc]ittà(\s*=.*?})', ur'\1ubicación\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Cc]oauthors(\s*=.*?})', ur'\1coautores\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Cc]oautors(\s*=.*?})', ur'\1coautores\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Cc]ol·lecció(\s*=.*?})', ur'\1obra\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Cc]ognom(\d{0,2}\s*=.*?})', ur'\1apellido\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Cc]onsulta(\s*=.*?})', ur'\1fechaacceso\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Dd]ate(\s*=.*?})', ur'\1fecha\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ee]dici[óo](\s*=.*?})', ur'\1edición\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ee]dition(\s*=.*?})', ur'\1edición\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ee]nllaçautor(\d{0,2}\s*=.*?})', ur'\1enlaceautor\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ff]echa[ _]de[ _]acceso(\s*=.*?})', ur'\1fechaacceso\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ff]echaaacceso(\s*=.*?})', ur'\1fechaacceso\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ff]irst(\s*=.*?})', ur'\1nombre\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ff]ormat(\s*=.*?})', ur'\1formato\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ii][Dd](\s*=.*?})', ur'\1id\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ii][Ss][Bb][Nn](\s*=.*?})', ur'\1isbn\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ii]ssue(\s*=.*?})', ur'\1número\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Jj]ournal(\s*=.*?})', ur'\1publicación\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ll]anguage(\s*=.*?})', ur'\1idioma\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ll]ast(\s*=.*?})', ur'\1apellido\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ll]aydate(\s*=.*?})', ur'\1fechaprofano\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ll]aysource(\s*=.*?})', ur'\1fuenteprofano\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ll]aysummary(\s*=.*?})', ur'\1resumenprofano\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ll]lengua(\s*=.*?})', ur'\1idioma\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ll]loc(\s*=.*?})', ur'\1ubicación\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ll]ocation(\s*=.*?})', ur'\1ubicación\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ll]ugar(\s*=.*?})', ur'\1ubicación\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Mm]onth(\s*=.*?})', ur'\1mes\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Nn]om(\d{0,2}\s*=.*?})', ur'\1nombre\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Oo]thers(\s*=.*?})', ur'\1otros\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Pp]age(\s*=.*?})', ur'\1página\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Pp]ages(\s*=.*?})', ur'\1páginas\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Pp]àgina(\s*=.*?})', ur'\1página\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Pp][aà]gines(\s*=.*?})', ur'\1páginas\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Pp]ublicaci[óo](\s*=.*?})', ur'\1publicación\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Pp]ublisher(\s*=.*?})', ur'\1editorial\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Qq]uote(\s*=.*?})', ur'\1cita\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Tt]itle(\s*=.*?})', ur'\1título\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Tt][íi]tol(\s*=.*?})', ur'\1título\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Uu]bicacion(\s*=.*?})', ur'\1ubicación\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Uu]rlcapítol(\s*=.*?})', ur'\1urlcapítulo\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Vv][ií]ncu?lo[ _]autora?(\s*=.*?})', ur'\1enlaceautor\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Vv]olum(\s*=.*?})', ur'\1volumen\2'), #ca
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Vv]olume(\s*=.*?})', ur'\1volumen\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Vv]olúmen(\s*=.*?})', ur'\1volumen\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Vv]olumem(\s*=.*?})', ur'\1volumen\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Ww]ork(\s*=.*?})', ur'\1obra\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)[Yy]ear(\s*=.*?})', ur'\1año\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*)U(?:RL|rl)(\s*=.*?})', ur'\1url\2'),
+        (ur'(%s)[Aa]ccessdate(\s*=.*?})' % P_CITA_INICIO, ur'\1fechaacceso\2'),
+        (ur'(%s)[Aa]ccessmonth(\s*=.*?})' % P_CITA_INICIO, ur'\1mesacceso\2'),
+        (ur'(%s)[Aa]ccessmonthday(\s*=.*?})' % P_CITA_INICIO, ur'\1mesacceso\2'),
+        (ur'(%s)[Aa]cces+o(\s*=.*?})' % P_CITA_INICIO, ur'\1fechaacceso\2'),
+        (ur'(%s)[Aa]ccessyear(\s*=.*?})' % P_CITA_INICIO, ur'\1añoacceso\2'),
+        (ur'(%s)[Aa]ny(\s*=.*?})' % P_CITA_INICIO, ur'\1año\2'), #ca
+        (ur'(%s)[Aa]rchivedate(\s*=.*?})' % P_CITA_INICIO, ur'\1fechaarchivo\2'),
+        (ur'(%s)[Aa]rchiveurl(\s*=.*?})' % P_CITA_INICIO, ur'\1urlarchivo\2'),
+        (ur'(%s)[Aa]rxiudata(\s*=.*?})' % P_CITA_INICIO, ur'\1fechaarchivo\2'), #ca
+        (ur'(%s)[Aa]rxiuurl(\s*=.*?})' % P_CITA_INICIO, ur'\1urlarchivo\2'), #ca
+        (ur'(%s)[Aa]uthor(\d{0,2}\s*=.*?})' % P_CITA_INICIO, ur'\1autor\2'),
+        (ur'(%s)[Aa]uthorlink(\d{0,2}\s*=.*?})' % P_CITA_INICIO, ur'\1enlaceautor\2'),
+        (ur'(%s)[Aa]utorenllaç(\d{0,2}\s*=.*?})' % P_CITA_INICIO, ur'\1enlaceautor\2'), #ca
+        (ur'(%s)[Cc]apítol(\s*=.*?})' % P_CITA_INICIO, ur'\1capítulo\2'), #ca
+        (ur'(%s)[Cc]hapter(\s*=.*?})' % P_CITA_INICIO, ur'\1capítulo\2'),
+        (ur'(%s)[Cc]hapterurl(\s*=.*?})' % P_CITA_INICIO, ur'\1urlcapítulo\2'),
+        (ur'(%s)[Cc]itació(\s*=.*?})' % P_CITA_INICIO, ur'\1cita\2'), #ca
+        (ur'(%s)[Cc]ittà(\s*=.*?})' % P_CITA_INICIO, ur'\1ubicación\2'),
+        (ur'(%s)[Cc]oauthors(\s*=.*?})' % P_CITA_INICIO, ur'\1coautores\2'),
+        (ur'(%s)[Cc]oautors(\s*=.*?})' % P_CITA_INICIO, ur'\1coautores\2'), #ca
+        (ur'(%s)[Cc]ol·lecció(\s*=.*?})' % P_CITA_INICIO, ur'\1obra\2'), #ca
+        (ur'(%s)[Cc]ognom(\d{0,2}\s*=.*?})' % P_CITA_INICIO, ur'\1apellido\2'), #ca
+        (ur'(%s)[Cc]onsulta(\s*=.*?})' % P_CITA_INICIO, ur'\1fechaacceso\2'), #ca
+        (ur'(%s)[Dd]ate(\s*=.*?})' % P_CITA_INICIO, ur'\1fecha\2'),
+        (ur'(%s)[Ee]dici[óo](\s*=.*?})' % P_CITA_INICIO, ur'\1edición\2'), #ca
+        (ur'(%s)[Ee]dition(\s*=.*?})' % P_CITA_INICIO, ur'\1edición\2'),
+        (ur'(%s)[Ee]nllaçautor(\d{0,2}\s*=.*?})' % P_CITA_INICIO, ur'\1enlaceautor\2'), #ca
+        (ur'(%s)[Ff]echa[ _]de[ _]acceso(\s*=.*?})' % P_CITA_INICIO, ur'\1fechaacceso\2'),
+        (ur'(%s)[Ff]echaaacceso(\s*=.*?})' % P_CITA_INICIO, ur'\1fechaacceso\2'),
+        (ur'(%s)[Ff]irst(\s*=.*?})' % P_CITA_INICIO, ur'\1nombre\2'),
+        (ur'(%s)[Ff]ormat(\s*=.*?})' % P_CITA_INICIO, ur'\1formato\2'),
+        (ur'(%s)[Ii][Dd](\s*=.*?})' % P_CITA_INICIO, ur'\1id\2'),
+        (ur'(%s)[Ii][Ss][Bb][Nn](\s*=.*?})' % P_CITA_INICIO, ur'\1isbn\2'),
+        (ur'(%s)[Ii]ssue(\s*=.*?})' % P_CITA_INICIO, ur'\1número\2'),
+        (ur'(%s)[Jj]ournal(\s*=.*?})' % P_CITA_INICIO, ur'\1publicación\2'),
+        (ur'(%s)[Ll]anguage(\s*=.*?})' % P_CITA_INICIO, ur'\1idioma\2'),
+        (ur'(%s)[Ll]ast(\s*=.*?})' % P_CITA_INICIO, ur'\1apellido\2'),
+        (ur'(%s)[Ll]aydate(\s*=.*?})' % P_CITA_INICIO, ur'\1fechaprofano\2'),
+        (ur'(%s)[Ll]aysource(\s*=.*?})' % P_CITA_INICIO, ur'\1fuenteprofano\2'),
+        (ur'(%s)[Ll]aysummary(\s*=.*?})' % P_CITA_INICIO, ur'\1resumenprofano\2'),
+        (ur'(%s)[Ll]lengua(\s*=.*?})' % P_CITA_INICIO, ur'\1idioma\2'), #ca
+        (ur'(%s)[Ll]loc(\s*=.*?})' % P_CITA_INICIO, ur'\1ubicación\2'), #ca
+        (ur'(%s)[Ll]ocation(\s*=.*?})' % P_CITA_INICIO, ur'\1ubicación\2'),
+        (ur'(%s)[Ll]ugar(\s*=.*?})' % P_CITA_INICIO, ur'\1ubicación\2'),
+        (ur'(%s)[Mm]onth(\s*=.*?})' % P_CITA_INICIO, ur'\1mes\2'),
+        (ur'(%s)[Nn]om(\d{0,2}\s*=.*?})' % P_CITA_INICIO, ur'\1nombre\2'), #ca
+        (ur'(%s)[Oo]thers(\s*=.*?})' % P_CITA_INICIO, ur'\1otros\2'),
+        (ur'(%s)[Pp]age(\s*=.*?})' % P_CITA_INICIO, ur'\1página\2'),
+        (ur'(%s)[Pp]ages(\s*=.*?})' % P_CITA_INICIO, ur'\1páginas\2'),
+        (ur'(%s)[Pp]àgina(\s*=.*?})' % P_CITA_INICIO, ur'\1página\2'), #ca
+        (ur'(%s)[Pp][aà]gines(\s*=.*?})' % P_CITA_INICIO, ur'\1páginas\2'), #ca
+        (ur'(%s)[Pp]ublicaci[óo](\s*=.*?})' % P_CITA_INICIO, ur'\1publicación\2'), #ca
+        (ur'(%s)[Pp]ublisher(\s*=.*?})' % P_CITA_INICIO, ur'\1editorial\2'),
+        (ur'(%s)[Qq]uote(\s*=.*?})' % P_CITA_INICIO, ur'\1cita\2'),
+        (ur'(%s)[Tt]itle(\s*=.*?})' % P_CITA_INICIO, ur'\1título\2'),
+        (ur'(%s)[Tt][íi]tol(\s*=.*?})' % P_CITA_INICIO, ur'\1título\2'), #ca
+        (ur'(%s)[Uu]bicacion(\s*=.*?})' % P_CITA_INICIO, ur'\1ubicación\2'),
+        (ur'(%s)[Uu]rlcapítol(\s*=.*?})' % P_CITA_INICIO, ur'\1urlcapítulo\2'), #ca
+        (ur'(%s)[Vv][ií]ncu?lo[ _]autora?(\s*=.*?})' % P_CITA_INICIO, ur'\1enlaceautor\2'),
+        (ur'(%s)[Vv]olum(\s*=.*?})' % P_CITA_INICIO, ur'\1volumen\2'), #ca
+        (ur'(%s)[Vv]olume(\s*=.*?})' % P_CITA_INICIO, ur'\1volumen\2'),
+        (ur'(%s)[Vv]olúmen(\s*=.*?})' % P_CITA_INICIO, ur'\1volumen\2'),
+        (ur'(%s)[Vv]olumem(\s*=.*?})' % P_CITA_INICIO, ur'\1volumen\2'),
+        (ur'(%s)[Ww]ork(\s*=.*?})' % P_CITA_INICIO, ur'\1obra\2'),
+        (ur'(%s)[Yy]ear(\s*=.*?})' % P_CITA_INICIO, ur'\1año\2'),
+        (ur'(%s)U(?:RL|rl)(\s*=.*?})' % P_CITA_INICIO, ur'\1url\2'),
 
         # Traducir ubicaciones (en orden alfabético en español)
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:bagh?dad)(\s*[}\|])', ur'\1Bagdad\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:[ei]sta[mn]bul)(\s*[}\|])', ur'\1Estambul\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:londres|london)(\s*[}\|])', ur'\1Londres\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:m[éeè][jx]ico,? ?d\.? ?f\.?|mexico city)(\s*[}\|])', ur'\1México,&nbsp;D.&nbsp;F.\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:mosc[úuù]|moscow|moskva)(\s*[}\|])', ur'\1Moscú\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:nanjing|nank[íiì]ng?)(\s*[}\|])', ur'\1Nankín\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:nueva delh?i|new delhi)(\s*[}\|])', ur'\1Nueva&nbsp;Delhi\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:nue[bv]a york?|new york(?: city)?)(\s*[}\|])', ur'\1Nueva&nbsp;York\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:beijing|pek[íiì]ng?)(\s*[}\|])', ur'\1Pekín\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:seo?[úuù]l)(\s*[}\|])', ur'\1Seúl\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:sevill[ae])(\s*[}\|])', ur'\1Sevilla\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:sh?angh?[áaà]i)(\s*[}\|])', ur'\1Shanghái\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:tehe?r[áaà]n)(\s*[}\|])', ur'\1Teherán\2'),
-        (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*ubicación\s*=\s*)(?:tok[iy]o)(\s*[}\|])', ur'\1Tokio\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:bagh?dad)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Bagdad\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:[ei]sta[mn]bul)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Estambul\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:londres|london)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Londres\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:m[éeè][jx]ico,? ?d\.? ?f\.?|mexico city)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1México,&nbsp;D.&nbsp;F.\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:mosc[úuù]|moscow|moskva)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Moscú\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:nanjing|nank[íiì]ng?)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Nankín\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:nueva delh?i|new delhi)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Nueva&nbsp;Delhi\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:nue[bv]a york?|new york(?: city)?)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Nueva&nbsp;York\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:beijing|pek[íiì]ng?)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Pekín\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:seo?[úuù]l)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Seúl\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:sevill[ae])(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Sevilla\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:sh?angh?[áaà]i)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Shanghái\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:tehe?r[áaà]n)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Teherán\2'),
+        (ur'(?i)(%subicación\s*=\s*)(?:tok[iy]o)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Tokio\2'),
 
         # Traducir idiomas (en orden alfabético en español)
             # Traducciones de "alemán" al español
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)german(\s*[}\|])', ur'\1alemán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)alem[ãa]o(\s*[}\|])', ur'\1alemán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)all?emande?(\s*[}\|])', ur'\1alemán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)all?em[áa]ny?(\s*[}\|])', ur'\1alemán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)de[iu]tsche?(\s*[}\|])', ur'\1alemán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)duits(\s*[}\|])', ur'\1alemán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)gearm[áa]inis(\s*[}\|])', ur'\1alemán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)germanaj(\s*[}\|])', ur'\1alemán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)tedesco(\s*[}\|])', ur'\1alemán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)german(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1alemán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)alem[ãa]o(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1alemán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)all?emande?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1alemán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)all?em[áa]ny?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1alemán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)de[iu]tsche?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1alemán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)duits(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1alemán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)gearm[áa]inis(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1alemán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)germanaj(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1alemán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)tedesco(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1alemán\2'),
                 # En inglés con enlace
-                (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)\[\[\s*german[ _]language\s*\|\s*german\s*\]\](\s*[}\|])', ur'\1[[Idioma alemán|alemán]]\2'),
+                (ur'(?i)(%sidioma\s*=\s*)\[\[\s*german[ _]language\s*\|\s*german\s*\]\](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1[[Idioma alemán|alemán]]\2'),
 
             # Traducciones de "catalán" al español
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)catal[ãáaà]o?(\s*[}\|])', ur'\1catalán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)catal[áaà]n[aeio]?(\s*[}\|])', ur'\1catalán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)catal[óo]inis(\s*[}\|])', ur'\1catalán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)catalaanse?(\s*[}\|])', ur'\1catalán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)katalana?(\s*[}\|])', ur'\1catalán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)katalanaren(\s*[}\|])', ur'\1catalán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)katalanische?n?(\s*[}\|])', ur'\1catalán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)katalanska(\s*[}\|])', ur'\1catalán\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)katalunaj?(\s*[}\|])', ur'\1catalán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)catal[ãáaà]o?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1catalán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)catal[áaà]n[aeio]?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1catalán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)catal[óo]inis(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1catalán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)catalaanse?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1catalán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)katalana?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1catalán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)katalanaren(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1catalán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)katalanische?n?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1catalán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)katalanska(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1catalán\2'),
+            (ur'(?i)(%sidioma\s*=\s*)katalunaj?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1catalán\2'),
                 # En inglés con enlace
-                (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)\[\[\s*catalan[ _]language\s*\|\s*catalan\s*\]\](\s*[}\|])', ur'\1[[Idioma catalán|catalán]]\2'),
+                (ur'(?i)(%sidioma\s*=\s*)\[\[\s*catalan[ _]language\s*\|\s*catalan\s*\]\](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1[[Idioma catalán|catalán]]\2'),
 
             # Traducciones de "español" al español
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)castell[àa](\s*[}\|])', ur'\1español\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)espagnole?(\s*[}\|])', ur'\1español\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)espainiako(\s*[}\|])', ur'\1español\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)espan[hiy]?ol(\s*[}\|])', ur'\1español\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)españ[óo]l(\s*[}\|])', ur'\1español\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)hispan[ao](\s*[}\|])', ur'\1español\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)sp[áaà]innis(\s*[}\|])', ur'\1español\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)spaans(\s*[}\|])', ur'\1español\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)spagnolo(\s*[}\|])', ur'\1español\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)spanische?n?(\s*[}\|])', ur'\1español\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)spanish(\s*[}\|])', ur'\1español\2'),
+            (ur'(?i)(%sidioma\s*=\s*)castell[àa](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1español\2'),
+            (ur'(?i)(%sidioma\s*=\s*)espagnole?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1español\2'),
+            (ur'(?i)(%sidioma\s*=\s*)espainiako(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1español\2'),
+            (ur'(?i)(%sidioma\s*=\s*)espan[hiy]?ol(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1español\2'),
+            (ur'(?i)(%sidioma\s*=\s*)españ[óo]l(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1español\2'),
+            (ur'(?i)(%sidioma\s*=\s*)hispan[ao](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1español\2'),
+            (ur'(?i)(%sidioma\s*=\s*)sp[áaà]innis(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1español\2'),
+            (ur'(?i)(%sidioma\s*=\s*)spaans(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1español\2'),
+            (ur'(?i)(%sidioma\s*=\s*)spagnolo(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1español\2'),
+            (ur'(?i)(%sidioma\s*=\s*)spanische?n?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1español\2'),
+            (ur'(?i)(%sidioma\s*=\s*)spanish(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1español\2'),
                 # En inglés con enlace
-                (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)\[\[\s*spanish[ _]language\s*\|\s*spanish\s*\]\](\s*[}\|])', ur'\1[[Idioma español|español]]\2'),
+                (ur'(?i)(%sidioma\s*=\s*)\[\[\s*spanish[ _]language\s*\|\s*spanish\s*\]\](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1[[Idioma español|español]]\2'),
 
             # Traducciones de "francés" al español
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)french(\s*[}\|])', ur'\1francés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)ffrangeg(\s*[}\|])', ur'\1francés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)fraincis(\s*[}\|])', ur'\1francés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)fran[çc]aise?(\s*[}\|])', ur'\1francés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)franc[éêèe]se?(\s*[}\|])', ur'\1francés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)francaj(\s*[}\|])', ur'\1francés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)frans(\s*[}\|])', ur'\1francés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)franska(\s*[}\|])', ur'\1francés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)frantsesa?(\s*[}\|])', ur'\1francés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)franz[öo]sische?(\s*[}\|])', ur'\1francés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)french(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1francés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)ffrangeg(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1francés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)fraincis(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1francés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)fran[çc]aise?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1francés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)franc[éêèe]se?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1francés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)francaj(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1francés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)frans(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1francés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)franska(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1francés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)frantsesa?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1francés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)franz[öo]sische?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1francés\2'),
                 # En inglés con enlace
-                (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)\[\[\s*french[ _]language\s*\|\s*french\s*\]\](\s*[}\|])', ur'\1[[Idioma francés|francés]]\2'),
+                (ur'(?i)(%sidioma\s*=\s*)\[\[\s*french[ _]language\s*\|\s*french\s*\]\](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1[[Idioma francés|francés]]\2'),
             
             # Traducciones de "inglés" al español
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)angl[éèe]s(\s*[}\|])', ur'\1inglés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)anglais(\s*[}\|])', ur'\1inglés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)anglaj(\s*[}\|])', ur'\1inglés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)anglicus(\s*[}\|])', ur'\1inglés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)b[ée]arla(\s*[}\|])', ur'\1inglés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)engels(\s*[}\|])', ur'\1inglés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)engelska(\s*[}\|])', ur'\1inglés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)englez(\s*[}\|])', ur'\1inglés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)englische?(\s*[}\|])', ur'\1inglés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)english(\s*[}\|])', ur'\1inglés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)ingl[éêèe]se?(\s*[}\|])', ur'\1inglés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)saesneg(\s*[}\|])', ur'\1inglés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)angl[éèe]s(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1inglés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)anglais(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1inglés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)anglaj(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1inglés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)anglicus(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1inglés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)b[ée]arla(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1inglés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)engels(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1inglés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)engelska(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1inglés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)englez(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1inglés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)englische?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1inglés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)english(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1inglés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)ingl[éêèe]se?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1inglés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)saesneg(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1inglés\2'),
                 # En inglés con enlace
-                (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)\[\[\s*english[ _]language\s*\|\s*english\s*\]\](\s*[}\|])', ur'\1[[Idioma inglés|inglés]]\2'),
+                (ur'(?i)(%sidioma\s*=\s*)\[\[\s*english[ _]language\s*\|\s*english\s*\]\](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1[[Idioma inglés|inglés]]\2'),
             
             # Traducciones de "italiano" al español
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)iodáilis(\s*[}\|])', ur'\1italiano\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)ital[ao]j(\s*[}\|])', ur'\1italiano\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)itali[áaà](\s*[}\|])', ur'\1italiano\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)itali[ae]no?(\s*[}\|])', ur'\1italiano\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)italiaa?ns(\s*[}\|])', ur'\1italiano\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)italienische?(\s*[}\|])', ur'\1italiano\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)italiensk(\s*[}\|])', ur'\1italiano\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)taljan(\s*[}\|])', ur'\1italiano\2'),
+            (ur'(?i)(%sidioma\s*=\s*)iodáilis(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1italiano\2'),
+            (ur'(?i)(%sidioma\s*=\s*)ital[ao]j(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1italiano\2'),
+            (ur'(?i)(%sidioma\s*=\s*)itali[áaà](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1italiano\2'),
+            (ur'(?i)(%sidioma\s*=\s*)itali[ae]no?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1italiano\2'),
+            (ur'(?i)(%sidioma\s*=\s*)italiaa?ns(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1italiano\2'),
+            (ur'(?i)(%sidioma\s*=\s*)italienische?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1italiano\2'),
+            (ur'(?i)(%sidioma\s*=\s*)italiensk(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1italiano\2'),
+            (ur'(?i)(%sidioma\s*=\s*)taljan(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1italiano\2'),
                 # En inglés con enlace
-                (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)\[\[\s*italian[ _]language\s*\|\s*italian\s*\]\](\s*[}\|])', ur'\1[[Idioma italiano|italiano]]\2'),
+                (ur'(?i)(%sidioma\s*=\s*)\[\[\s*italian[ _]language\s*\|\s*italian\s*\]\](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1[[Idioma italiano|italiano]]\2'),
             
             # Traducciones de "neerlandés" al español
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)dutch(\s*[}\|])', ur'\1neerlandés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)nederlaa?nds?(\s*[}\|])', ur'\1neerlandés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)niederl[aä]ndische?(\s*[}\|])', ur'\1neerlandés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)niderlandzki(\s*[}\|])', ur'\1neerlandés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)n[éeè][éeè]?rland[aéeè]i?[sz][aăe]?(\s*[}\|])', ur'\1neerlandés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)olandese?(\s*[}\|])', ur'\1neerlandés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)dutch(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1neerlandés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)nederlaa?nds?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1neerlandés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)niederl[aä]ndische?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1neerlandés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)niderlandzki(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1neerlandés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)n[éeè][éeè]?rland[aéeè]i?[sz][aăe]?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1neerlandés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)olandese?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1neerlandés\2'),
                 # En inglés con enlace
-                (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)\[\[\s*dutch[ _]language\s*\|\s*dutch\s*\]\](\s*[}\|])', ur'\1[[Idioma neerlandés|neerlandés]]\2'),
+                (ur'(?i)(%sidioma\s*=\s*)\[\[\s*dutch[ _]language\s*\|\s*dutch\s*\]\](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1[[Idioma neerlandés|neerlandés]]\2'),
 
             # Traducciones de "portugués" al español
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)portugu?[éêèe]e?s[ae]?(\s*[}\|])', ur'\1portugués\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)portaing[ée]ilis(\s*[}\|])', ur'\1portugués\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)portogh[êéèe]se?(\s*[}\|])', ur'\1portugués\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)portugaise?(\s*[}\|])', ur'\1portugués\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)portugala(\s*[}\|])', ur'\1portugués\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)portugiesische?(\s*[}\|])', ur'\1portugués\2'),
+            (ur'(?i)(%sidioma\s*=\s*)portugu?[éêèe]e?s[ae]?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1portugués\2'),
+            (ur'(?i)(%sidioma\s*=\s*)portaing[ée]ilis(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1portugués\2'),
+            (ur'(?i)(%sidioma\s*=\s*)portogh[êéèe]se?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1portugués\2'),
+            (ur'(?i)(%sidioma\s*=\s*)portugaise?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1portugués\2'),
+            (ur'(?i)(%sidioma\s*=\s*)portugala(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1portugués\2'),
+            (ur'(?i)(%sidioma\s*=\s*)portugiesische?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1portugués\2'),
                 # En inglés con enlace
-                (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)\[\[\s*portuguese[ _]language\s*\|\s*portuguese\s*\]\](\s*[}\|])', ur'\1[[Idioma portugués|portugués]]\2'),
+                (ur'(?i)(%sidioma\s*=\s*)\[\[\s*portuguese[ _]language\s*\|\s*portuguese\s*\]\](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1[[Idioma portugués|portugués]]\2'),
 
             # Traducciones de "ruso" al español
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)rusa?(\s*[}\|])', ur'\1ruso\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)errusiera(\s*[}\|])', ur'\1ruso\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)rúisis(\s*[}\|])', ur'\1ruso\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)russ[eo](\s*[}\|])', ur'\1ruso\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)russiann?e?(\s*[}\|])', ur'\1ruso\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)russische?n?(\s*[}\|])', ur'\1ruso\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)russkaya(\s*[}\|])', ur'\1ruso\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)russkiy(\s*[}\|])', ur'\1ruso\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)rwsia(\s*[}\|])', ur'\1ruso\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)ryska(\s*[}\|])', ur'\1ruso\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)русская(\s*[}\|])', ur'\1ruso\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)русский(\s*[}\|])', ur'\1ruso\2'),
+            (ur'(?i)(%sidioma\s*=\s*)rusa?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1ruso\2'),
+            (ur'(?i)(%sidioma\s*=\s*)errusiera(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1ruso\2'),
+            (ur'(?i)(%sidioma\s*=\s*)rúisis(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1ruso\2'),
+            (ur'(?i)(%sidioma\s*=\s*)russ[eo](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1ruso\2'),
+            (ur'(?i)(%sidioma\s*=\s*)russiann?e?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1ruso\2'),
+            (ur'(?i)(%sidioma\s*=\s*)russische?n?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1ruso\2'),
+            (ur'(?i)(%sidioma\s*=\s*)russkaya(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1ruso\2'),
+            (ur'(?i)(%sidioma\s*=\s*)russkiy(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1ruso\2'),
+            (ur'(?i)(%sidioma\s*=\s*)rwsia(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1ruso\2'),
+            (ur'(?i)(%sidioma\s*=\s*)ryska(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1ruso\2'),
+            (ur'(?i)(%sidioma\s*=\s*)русская(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1ruso\2'),
+            (ur'(?i)(%sidioma\s*=\s*)русский(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1ruso\2'),
                 # En inglés con enlace
-                (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)\[\[\s*russian[ _]language\s*\|\s*russian\s*\]\](\s*[}\|])', ur'\1[[Idioma ruso|ruso]]\2'),
+                (ur'(?i)(%sidioma\s*=\s*)\[\[\s*russian[ _]language\s*\|\s*russian\s*\]\](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1[[Idioma ruso|ruso]]\2'),
 
             # Traducciones de "sueco" al español
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)schwedische?n?(\s*[}\|])', ur'\1sueco\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)su[ée]co?(\s*[}\|])', ur'\1sueco\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)su[éeè]doise?(\s*[}\|])', ur'\1sueco\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)sualainnis(\s*[}\|])', ur'\1sueco\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)suediako(\s*[}\|])', ur'\1sueco\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)suediarrak?(\s*[}\|])', ur'\1sueco\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)sved[ao]j?(\s*[}\|])', ur'\1sueco\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)svedese(\s*[}\|])', ur'\1sueco\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)svensk[ae]?(\s*[}\|])', ur'\1sueco\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)swed[ei]g(\s*[}\|])', ur'\1sueco\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)swedish(\s*[}\|])', ur'\1sueco\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)swedish(\s*[}\|])', ur'\1sueco\2'),
+            (ur'(?i)(%sidioma\s*=\s*)schwedische?n?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1sueco\2'),
+            (ur'(?i)(%sidioma\s*=\s*)su[ée]co?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1sueco\2'),
+            (ur'(?i)(%sidioma\s*=\s*)su[éeè]doise?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1sueco\2'),
+            (ur'(?i)(%sidioma\s*=\s*)sualainnis(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1sueco\2'),
+            (ur'(?i)(%sidioma\s*=\s*)suediako(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1sueco\2'),
+            (ur'(?i)(%sidioma\s*=\s*)suediarrak?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1sueco\2'),
+            (ur'(?i)(%sidioma\s*=\s*)sved[ao]j?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1sueco\2'),
+            (ur'(?i)(%sidioma\s*=\s*)svedese(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1sueco\2'),
+            (ur'(?i)(%sidioma\s*=\s*)svensk[ae]?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1sueco\2'),
+            (ur'(?i)(%sidioma\s*=\s*)swed[ei]g(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1sueco\2'),
+            (ur'(?i)(%sidioma\s*=\s*)swedish(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1sueco\2'),
+            (ur'(?i)(%sidioma\s*=\s*)swedish(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1sueco\2'),
                 # En inglés con enlace
-                (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)\[\[\s*swedish[ _]language\s*\|\s*swedish\s*\]\](\s*[}\|])', ur'\1[[Idioma sueco|sueco]]\2'),
+                (ur'(?i)(%sidioma\s*=\s*)\[\[\s*swedish[ _]language\s*\|\s*swedish\s*\]\](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1[[Idioma sueco|sueco]]\2'),
 
             # Más traducciones, solo del inglés al español, y estandarización
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)bengal[íi](\s*[}\|])', ur'\1bengalí\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)chin(?:ese|o)(\s*[}\|])', ur'\1chino\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)[ck]ore[áa]no?(\s*[}\|])', ur'\1coreano\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)jap(?:anese|on[éeè]s)(\s*[}\|])', ur'\1japonés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)javan[éeè]se?(\s*[}\|])', ur'\1javanés\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)mandar[íiì]n(\s*[}\|])', ur'\1mandarín\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)marath?[íiì](\s*[}\|])', ur'\1maratí\2'),
-            (ur'(?i)({{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*idioma\s*=\s*)telug[úuù](\s*[}\|])', ur'\1telugú\2'),
+            (ur'(?i)(%sidioma\s*=\s*)bengal[íi](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1bengalí\2'),
+            (ur'(?i)(%sidioma\s*=\s*)chin(?:ese|o)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1chino\2'),
+            (ur'(?i)(%sidioma\s*=\s*)[ck]ore[áa]no?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1coreano\2'),
+            (ur'(?i)(%sidioma\s*=\s*)jap(?:anese|on[éeè]s)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1japonés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)javan[éeè]se?(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1javanés\2'),
+            (ur'(?i)(%sidioma\s*=\s*)mandar[íiì]n(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1mandarín\2'),
+            (ur'(?i)(%sidioma\s*=\s*)marath?[íiì](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1maratí\2'),
+            (ur'(?i)(%sidioma\s*=\s*)telug[úuù](\s*[}\|])' % P_CITA_INICIO_NC, ur'\1telugú\2'),
 
         # Estandarizar y traducir fechas al español
             # En plantillas de citas
@@ -541,72 +573,72 @@ fixes['inva-wp-es'] = {
                 # Estandarizar y traducir meses aislados
                 #  Ejemplo: {{cita web|mes=January}} → {{cita web|mes=enero}}
                 #  Idiomas garantizados: es, en, fr, sv
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*\bmes\s*=\s*)(?:en[éeè]ro|januar[iy]|janvier)', ur'\1enero'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*\bmes\s*=\s*)(?:febr[éeè]ro|februar[iy]|f[éeè]vrier)', ur'\1febrero'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*\bmes\s*=\s*)(?:m[áaà]rzo|march|mars)', ur'\1marzo'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*\bmes\s*=\s*)(?:abr[íiì]l|april|avril)', ur'\1abril'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*\bmes\s*=\s*)(?:m[áaà]yo|ma[ijy])', ur'\1mayo'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*\bmes\s*=\s*)(?:j[úuù]nio|jun[ei]|juin)', ur'\1junio'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*\bmes\s*=\s*)(?:j[úuù]lio|jul[iy]|juillet)', ur'\1julio'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*\bmes\s*=\s*)(?:ag[óoò]sto|augusti?|ao[ûu]t)', ur'\1agosto'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*\bmes\s*=\s*)(?:septi[éeè]mbre|september|septembre)', ur'\1septiembre'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*\bmes\s*=\s*)(?:oct[úuù]bre|o[ck]tober|octobre)', ur'\1octubre'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*\bmes\s*=\s*)(?:novi[éeè]mbre|november|novembre)', ur'\1noviembre'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*\bmes\s*=\s*)(?:dici[éeè]mbre|december|d[éeè]cembre)', ur'\1diciembre'),
+                (ur'(?i)(%s\bmes\s*=\s*)(?:en[éeè]ro|januar[iy]|janvier)' % P_CITA_INICIO_NC, ur'\1enero'),
+                (ur'(?i)(%s\bmes\s*=\s*)(?:febr[éeè]ro|februar[iy]|f[éeè]vrier)' % P_CITA_INICIO_NC, ur'\1febrero'),
+                (ur'(?i)(%s\bmes\s*=\s*)(?:m[áaà]rzo|march|mars)' % P_CITA_INICIO_NC, ur'\1marzo'),
+                (ur'(?i)(%s\bmes\s*=\s*)(?:abr[íiì]l|april|avril)' % P_CITA_INICIO_NC, ur'\1abril'),
+                (ur'(?i)(%s\bmes\s*=\s*)(?:m[áaà]yo|ma[ijy])' % P_CITA_INICIO_NC, ur'\1mayo'),
+                (ur'(?i)(%s\bmes\s*=\s*)(?:j[úuù]nio|jun[ei]|juin)' % P_CITA_INICIO_NC, ur'\1junio'),
+                (ur'(?i)(%s\bmes\s*=\s*)(?:j[úuù]lio|jul[iy]|juillet)' % P_CITA_INICIO_NC, ur'\1julio'),
+                (ur'(?i)(%s\bmes\s*=\s*)(?:ag[óoò]sto|augusti?|ao[ûu]t)' % P_CITA_INICIO_NC, ur'\1agosto'),
+                (ur'(?i)(%s\bmes\s*=\s*)(?:septi[éeè]mbre|september|septembre)' % P_CITA_INICIO_NC, ur'\1septiembre'),
+                (ur'(?i)(%s\bmes\s*=\s*)(?:oct[úuù]bre|o[ck]tober|octobre)' % P_CITA_INICIO_NC, ur'\1octubre'),
+                (ur'(?i)(%s\bmes\s*=\s*)(?:novi[éeè]mbre|november|novembre)' % P_CITA_INICIO_NC, ur'\1noviembre'),
+                (ur'(?i)(%s\bmes\s*=\s*)(?:dici[éeè]mbre|december|d[éeè]cembre)' % P_CITA_INICIO_NC, ur'\1diciembre'),
 
                 # Estandarizar y traducir fechas con palabras
                 #  Idiomas garantizados: es, en, fr, sv
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:en[éeè]ro|januar[iy]|janvier)\b', ur'\1 de enero'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:febr[éeè]ro|februar[iy]|f[éeè]vrier)\b', ur'\1 de febrero'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:m[áaà]rzo|march|mars)\b', ur'\1 de marzo'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:abr[íiì]l|april|avril)\b', ur'\1 de abril'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:m[áaà]yo|ma[ijy])\b', ur'\1 de mayo'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:j[úuù]nio|jun[ei]|juin)\b', ur'\1 de junio'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:j[úuù]lio|jul[iy]|juillet)\b', ur'\1 de julio'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:ag[óoò]sto|augusti?|ao[ûu]t)\b', ur'\1 de agosto'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:septi[éeè]mbre|september|septembre)\b', ur'\1 de septiembre'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:oct[úuù]bre|o[ck]tober|octobre)\b', ur'\1 de octubre'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:novi[éeè]mbre|november|novembre)\b', ur'\1 de noviembre'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:dici[éeè]mbre|december|d[éeè]cembre)\b', ur'\1 de diciembre'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:en[éeè]ro|januar[iy]|janvier)\b' % P_CITA_INICIO_NC, ur'\1 de enero'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:febr[éeè]ro|februar[iy]|f[éeè]vrier)\b' % P_CITA_INICIO_NC, ur'\1 de febrero'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:m[áaà]rzo|march|mars)\b' % P_CITA_INICIO_NC, ur'\1 de marzo'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:abr[íiì]l|april|avril)\b' % P_CITA_INICIO_NC, ur'\1 de abril'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:m[áaà]yo|ma[ijy])\b' % P_CITA_INICIO_NC, ur'\1 de mayo'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:j[úuù]nio|jun[ei]|juin)\b' % P_CITA_INICIO_NC, ur'\1 de junio'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:j[úuù]lio|jul[iy]|juillet)\b' % P_CITA_INICIO_NC, ur'\1 de julio'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:ag[óoò]sto|augusti?|ao[ûu]t)\b' % P_CITA_INICIO_NC, ur'\1 de agosto'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:septi[éeè]mbre|september|septembre)\b' % P_CITA_INICIO_NC, ur'\1 de septiembre'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:oct[úuù]bre|o[ck]tober|octobre)\b' % P_CITA_INICIO_NC, ur'\1 de octubre'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:novi[éeè]mbre|november|novembre)\b' % P_CITA_INICIO_NC, ur'\1 de noviembre'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)[\s\-/](?:dici[éeè]mbre|december|d[éeè]cembre)\b' % P_CITA_INICIO_NC, ur'\1 de diciembre'),
 
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:en[éeè](?:ro)?|jan(?:uar[iy])?|janvier)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1 de enero de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:feb(?:r[éeè]ro)?|februar[iy]|f[éeè]v(?:rier)?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1 de febrero de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:m[áaà]r(?:zo)?|march|mars)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1 de marzo de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:abr(?:[íiì]l)?|apr(?:il)?|avr(?:il)?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1 de abril de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:m[áaà]yo?|ma[ijy])[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1 de mayo de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:j[úuù]n(?:io)?|jun[ei]|juin)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1 de junio de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:j[úuù]l(?:io)?|jul[iy]|juil(?:let)?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1 de julio de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:ag[óoò](?:sto)?|aug(?:usti?)?|ao[ûu]t)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1 de agosto de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:sept?(?:i[éeè]mbre)?|september|septembre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1 de septiembre de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:oct[úuù]bre|o[ck]t(?:ober)?|octobre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1 de octubre de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:nov(?:i[éeè]mbre)?|november|novembre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1 de noviembre de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:dic(?:i[éeè]mbre)?|december|d[éeè]c(?:embre)?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1 de diciembre de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:en[éeè](?:ro)?|jan(?:uar[iy])?|janvier)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1 de enero de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:feb(?:r[éeè]ro)?|februar[iy]|f[éeè]v(?:rier)?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1 de febrero de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:m[áaà]r(?:zo)?|march|mars)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1 de marzo de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:abr(?:[íiì]l)?|apr(?:il)?|avr(?:il)?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1 de abril de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:m[áaà]yo?|ma[ijy])[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1 de mayo de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:j[úuù]n(?:io)?|jun[ei]|juin)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1 de junio de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:j[úuù]l(?:io)?|jul[iy]|juil(?:let)?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1 de julio de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:ag[óoò](?:sto)?|aug(?:usti?)?|ao[ûu]t)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1 de agosto de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:sept?(?:i[éeè]mbre)?|september|septembre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1 de septiembre de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:oct[úuù]bre|o[ck]t(?:ober)?|octobre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1 de octubre de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:nov(?:i[éeè]mbre)?|november|novembre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1 de noviembre de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*\d\d?)(?:[\s\-/]| de )(?:dic(?:i[éeè]mbre)?|december|d[éeè]c(?:embre)?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1 de diciembre de \2\3'),
 
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:en[éeè]ro|januar[iy]|janvier)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1enero de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:febr[éeè]ro|februar[iy]|f[éeè]vrier)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1febrero de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:m[áaà]rzo|march|mars)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1marzo de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:abr[íiì]l|april|avril)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1abril de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:m[áaà]yo|ma[ijy])[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1mayo de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:j[úuù]nio|jun[ei]|juin)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1junio de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:j[úuù]lio|jul[iy]|juillet)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1julio de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:ag[óoò]sto|augusti?|ao[ûu]t)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1agosto de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:septi[éeè]mbre|september|septembre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1septiembre de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:oct[úuù]bre|o[ck]tober|octobre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1octubre de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:novi[éeè]mbre|november|novembre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1noviembre de \2\3'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:dici[éeè]mbre|december|d[éeè]cembre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1diciembre de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:en[éeè]ro|januar[iy]|janvier)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1enero de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:febr[éeè]ro|februar[iy]|f[éeè]vrier)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1febrero de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:m[áaà]rzo|march|mars)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1marzo de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:abr[íiì]l|april|avril)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1abril de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:m[áaà]yo|ma[ijy])[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1mayo de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:j[úuù]nio|jun[ei]|juin)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1junio de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:j[úuù]lio|jul[iy]|juillet)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1julio de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:ag[óoò]sto|augusti?|ao[ûu]t)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1agosto de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:septi[éeè]mbre|september|septembre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1septiembre de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:oct[úuù]bre|o[ck]tober|octobre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1octubre de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:novi[éeè]mbre|november|novembre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1noviembre de \2\3'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:dici[éeè]mbre|december|d[éeè]cembre)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1diciembre de \2\3'),
 
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:en[éeè]ro|januar[iy]|janvier)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1\2 de enero de \3\4'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:febr[éeè]ro|februar[iy]|f[éeè]vrier)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1\2 de febrero de \3\4'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:m[áaà]rzo|march|mars)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1\2 de marzo de \3\4'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:abr[íiì]l|april|avril)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1\2 de abril de \3\4'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:m[áaà]yo|ma[ijy])[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1\2 de mayo de \3\4'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:j[úuù]nio|jun[ei]|juin)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1\2 de junio de \3\4'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:j[úuù]lio|jul[iy]|juillet)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1\2 de julio de \3\4'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:ag[óoò]sto|augusti?|ao[ûu]t)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1\2 de agosto de \3\4'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:septi[éeè]mbre|september|septembre)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1\2 de septiembre de \3\4'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:oct[úuù]bre|o[ck]tober|octobre)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1\2 de octubre de \3\4'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:novi[éeè]mbre|november|novembre)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1\2 de noviembre de \3\4'),
-                (ur'(?i)({{[\s_]*cita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:dici[éeè]mbre|december|d[éeè]cembre)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])', ur'\1\2 de diciembre de \3\4'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:en[éeè]ro|januar[iy]|janvier)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1\2 de enero de \3\4'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:febr[éeè]ro|februar[iy]|f[éeè]vrier)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1\2 de febrero de \3\4'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:m[áaà]rzo|march|mars)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1\2 de marzo de \3\4'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:abr[íiì]l|april|avril)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1\2 de abril de \3\4'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:m[áaà]yo|ma[ijy])[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1\2 de mayo de \3\4'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:j[úuù]nio|jun[ei]|juin)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1\2 de junio de \3\4'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:j[úuù]lio|jul[iy]|juillet)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1\2 de julio de \3\4'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:ag[óoò]sto|augusti?|ao[ûu]t)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1\2 de agosto de \3\4'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:septi[éeè]mbre|september|septembre)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1\2 de septiembre de \3\4'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:oct[úuù]bre|o[ck]tober|octobre)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1\2 de octubre de \3\4'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:novi[éeè]mbre|november|novembre)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1\2 de noviembre de \3\4'),
+                (ur'(?i)(%s(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)(?:dici[éeè]mbre|december|d[éeè]cembre)[\s\-/](\d\d?)[\s\-/,]+([12]\d\d\d)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1\2 de diciembre de \3\4'),
 
             # En cualquier ámbito
                 # Aplicar minúscula inicial al mes, retirar artículo al año y
@@ -697,10 +729,10 @@ fixes['inva-wp-es'] = {
             (ur'(,+|:+|;+)<ref', ur'\1<ref'),
 
         # Traducir y estandarizar {{ficha de libro}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*(?:[Ii]nfobox[ _][Bb]ooks?|[Bb]ooks?[ _][Ii]nfobox)([\s_]*[}\|])', ur'{{ficha de libro\1'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Ff]icha[ _]de[ _]libro[^}]*)\b[Ii]mage( *=.*?})', ur'\1imagen\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Ff]icha[ _]de[ _]libro[^}]*)\b[Ii]mage_caption( *=.*?})', ur'\1pie de imagen\2'),
-        (ur'({{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Ff]icha[ _]de[ _]libro[^}]*)\b[Gg]enre( *=.*?})', ur'\1género\2'),
+        (ur'%s(?:[Ii]nfobox[ _][Bb]ooks?|[Bb]ooks?[ _][Ii]nfobox)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de libro\1'),
+        (ur'(%s[Ff]icha[ _]de[ _]libro[^}]*)\b[Ii]mage( *=.*?})' % P_INICIO, ur'\1imagen\2'),
+        (ur'(%s[Ff]icha[ _]de[ _]libro[^}]*)\b[Ii]mage_caption( *=.*?})' % P_INICIO, ur'\1pie de imagen\2'),
+        (ur'(%s[Ff]icha[ _]de[ _]libro[^}]*)\b[Gg]enre( *=.*?})' % P_INICIO, ur'\1género\2'),
         # Desactivado por https://es.wikipedia.org/?diff=59423057
         ## (ur'({{\s*[Ff]icha[ _]de[ _]libro[^}]*)\b[Nn]ame( *=.*?})', ur'\1título\2'),
 
@@ -710,54 +742,54 @@ fixes['inva-wp-es'] = {
         (ur'{{([\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*)[Nn]avbox[ _]subgroup([\s_]*[}\|])', ur'{{\1navegación/subgrupo\2'),
         (ur'{{([\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*)([Nn]avbox|[Nn]avbox[ _]generic|[Nn]avbox[ _]generic[ _]subgroup|[Nn]avigation[Bb]ox|[Pp]lantilla[ _]de[ _]navegación|[Nn]avbox[ _][Aa]rtista[ _][Mm]usical|[Tt]navbar-[Cc]ollapsible|[Nn]avegacion)([\s_]*[}\|])', ur'{{\1navegación\3'),
         # Pasar a {{ficha de artista musical}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Gg]rupo[ _][Mm]usical|[Ii]nfobox[ _][Mm]usical[ _][Aa]rtist|[Ii]nfobox[ _][Aa]rtista[ _][Mm]usical|[Ii]nfobox[ _][Gg]rupo[ _][Mm]usical|[Ff]icha[ _]de[ _][Mm]úsico|[Ff]icha[ _]de[ _][Cc]antante|[Ii]nfobox[ _][Mm]usical[ _][Aa]rtist)([\s_]*[}\|])', ur'{{ficha de artista musical\2'),
+        (ur'%s([Gg]rupo[ _][Mm]usical|[Ii]nfobox[ _][Mm]usical[ _][Aa]rtist|[Ii]nfobox[ _][Aa]rtista[ _][Mm]usical|[Ii]nfobox[ _][Gg]rupo[ _][Mm]usical|[Ff]icha[ _]de[ _][Mm]úsico|[Ff]icha[ _]de[ _][Cc]antante|[Ii]nfobox[ _][Mm]usical[ _][Aa]rtist)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de artista musical\2'),
         # Pasar a {{ficha de taxón}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Tt]axobox[ _][Dd][ée]but|[Ff]icha[ _]de[ _]taxon|[Ff]icha[ _]de[ _][Vv]irus|[Tt]axobox)([\s_]*[}\|])', ur'{{ficha de taxón\2'),
+        (ur'%s([Tt]axobox[ _][Dd][ée]but|[Ff]icha[ _]de[ _]taxon|[Ff]icha[ _]de[ _][Vv]irus|[Tt]axobox)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de taxón\2'),
         # Pasar a {{ficha de organización}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ii]nfobox[ _][Cc]ompany|[Ii]nfobox[ _][Ee]mpresa|[Ii]nfobox[ _][Ee]mpresa[ _][Dd]esaparecida|[Ii]nfobox[ _][Oo]rganizaci[óo]n|[Ff]icha[ _]de[ _]ONG|[Ff]icha[ _]de[ _]empresa|[Ff]icha[ _]de[ _]asociaci[óo]n|[Ii]nfobox[ _][Oo]rganization|[Ff]icha[ _]de[ _]Organizaci[óo]n|[Ff]icha[ _]de[ _][Ff][áa]brica)([\s_]*[}\|])', ur'{{ficha de organización\2'),
+        (ur'%s([Ii]nfobox[ _][Cc]ompany|[Ii]nfobox[ _][Ee]mpresa|[Ii]nfobox[ _][Ee]mpresa[ _][Dd]esaparecida|[Ii]nfobox[ _][Oo]rganizaci[óo]n|[Ff]icha[ _]de[ _]ONG|[Ff]icha[ _]de[ _]empresa|[Ff]icha[ _]de[ _]asociaci[óo]n|[Ii]nfobox[ _][Oo]rganization|[Ff]icha[ _]de[ _]Organizaci[óo]n|[Ff]icha[ _]de[ _][Ff][áa]brica)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de organización\2'),
         # Pasar a {{ficha de sencillo}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ii]nfobox[ _][Ss]ingle)([\s_]*[}\|])', ur'{{ficha de sencillo\2'),
+        (ur'%s([Ii]nfobox[ _][Ss]ingle)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de sencillo\2'),
         # Pasar a {{ficha de canción}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Cc]anci[óo]n|[Ff]icha[ _]de[ _][Cc]ancion|[Ff]icha[ _]de[ _]Canción)([\s_]*[}\|])', ur'{{ficha de canción\2'),
+        (ur'%s([Cc]anci[óo]n|[Ff]icha[ _]de[ _][Cc]ancion|[Ff]icha[ _]de[ _]Canción)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de canción\2'),
         # Pasar a {{ficha de canal de televisión}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ii]nfobox[ _][Cc]anal[ _]de[ _]TV|[Tt]elevisora|[Ff]icha[ _]de[ _]televisora|[Ff]icha[ _]de[ _]canal[ _]de[ _]television|[Ii]nfobox[ _]TV[ _]channel)([\s_]*[}\|])', ur'{{ficha de canal de televisión\2'),
+        (ur'%s([Ii]nfobox[ _][Cc]anal[ _]de[ _]TV|[Tt]elevisora|[Ff]icha[ _]de[ _]televisora|[Ff]icha[ _]de[ _]canal[ _]de[ _]television|[Ii]nfobox[ _]TV[ _]channel)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de canal de televisión\2'),
         # Pasar a {{ficha de persona}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ii]nfobox[ _][Bb]iograf[íi]a|[Ff]icha[ _]de[ _][Bb]iograf[íi]a|[Ii]nfobox[ _][Pp]ersonalidades)([\s_]*[}\|])', ur'{{ficha de persona\2'),
+        (ur'%s([Ii]nfobox[ _][Bb]iograf[íi]a|[Ff]icha[ _]de[ _][Bb]iograf[íi]a|[Ii]nfobox[ _][Pp]ersonalidades)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de persona\2'),
         # Pasar a {{ficha de película}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ii]nfobox[ _][Pp]el[íi]cula|[Ff]icha[ _]de[ _][Cc]ortometraje|[Ff]icha[ _]de[ _][Pp]elicula)([\s_]*[}\|])', ur'{{ficha de película\2'),
+        (ur'%s([Ii]nfobox[ _][Pp]el[íi]cula|[Ff]icha[ _]de[ _][Cc]ortometraje|[Ff]icha[ _]de[ _][Pp]elicula)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de película\2'),
         # Pasar a {{ficha de localidad de Japón}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ii]nfobox[ _][Cc]iudad[ _][Jj]ap[oó]n)([\s_]*[}\|])', ur'{{ficha de localidad de Japón\2'),
+        (ur'%s([Ii]nfobox[ _][Cc]iudad[ _][Jj]ap[oó]n)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de localidad de Japón\2'),
         # Pasar a {{ficha de localidad de Brasil}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ii]nfobox[ _][Cc]iudad[ _][Bb]rasil)([\s_]*[}\|])', ur'{{ficha de localidad de Brasil\2'),
+        (ur'%s([Ii]nfobox[ _][Cc]iudad[ _][Bb]rasil)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de localidad de Brasil\2'),
         # Pasar a {{ficha de localidad de Cuba}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ii]nfobox[ _][Cc]iudad[ _][Cc]uba)([\s_]*[}\|])', ur'{{ficha de localidad de Cuba\2'),
+        (ur'%s([Ii]nfobox[ _][Cc]iudad[ _][Cc]uba)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de localidad de Cuba\2'),
         # Pasar a {{ficha de localidad de Uruguay}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ii]nfobox[ _][Cc]iudad[ _][Uu]ruguay)([\s_]*[}\|])', ur'{{ficha de localidad de Uruguay\2'),
+        (ur'%s([Ii]nfobox[ _][Cc]iudad[ _][Uu]ruguay)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de localidad de Uruguay\2'),
         # Pasar a {{ficha de localidad de Estonia}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ii]nfobox[ _][Ll]inn)([\s_]*[}\|])', ur'{{ficha de localidad de Estonia\2'),
+        (ur'%s([Ii]nfobox[ _][Ll]inn)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de localidad de Estonia\2'),
         # Pasar a {{ficha de localidad de Polonia}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ii]nfobox[ _][Pp]olonia)([\s_]*[}\|])', ur'{{ficha de localidad de Polonia\2'),
+        (ur'%s([Ii]nfobox[ _][Pp]olonia)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de localidad de Polonia\2'),
         # Pasar a {{leyenda}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ll]egend|[Ll]egend3)([\s_]*[}\|])', ur'{{leyenda\2'),
+        (ur'%s([Ll]egend|[Ll]egend3)([\s_]*[}\|])' % P_INICIO, ur'{{leyenda\2'),
         # Pasar a {{ficha de escultismo}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Ii]nfobox[ _][Ee]scultismomundial)([\s_]*[}\|])', ur'{{ficha de escultismo\2'),
+        (ur'%s([Ii]nfobox[ _][Ee]scultismomundial)([\s_]*[}\|])' % P_INICIO, ur'{{ficha de escultismo\2'),
         # Pasar a {{etiqueta imagen}} y similares
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Ii]mage[ _]label[ _]*\|([^}]*)}}', ur'{{etiqueta imagen|\1}}'),
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Ii]mage[ _]label[ _]begin[ _]*\|([^}]*)}}', ur'{{etiqueta imagen inicio|\1}}'),
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Ii]mage[ _]label[ _]small[ _]*\|([^}]*)}}', ur'{{etiqueta imagen pequeña|\1}}'),
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Ii]mage[ _]label[ _]end[ _]*\|([^}]*)}}', ur'{{etiqueta imagen fin|\1}}'),
+        (ur'%s[Ii]mage[ _]label[ _]*\|([^}]*)}}' % P_INICIO, ur'{{etiqueta imagen|\1}}'),
+        (ur'%s[Ii]mage[ _]label[ _]begin[ _]*\|([^}]*)}}' % P_INICIO, ur'{{etiqueta imagen inicio|\1}}'),
+        (ur'%s[Ii]mage[ _]label[ _]small[ _]*\|([^}]*)}}' % P_INICIO, ur'{{etiqueta imagen pequeña|\1}}'),
+        (ur'%s[Ii]mage[ _]label[ _]end[ _]*\|([^}]*)}}' % P_INICIO, ur'{{etiqueta imagen fin|\1}}'),
         # Pasar a {{referencias}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Rr]efs|[Uu]nreferenced|[Rr]efimprove|[Uu]nsourced)(\s*[}\|])', ur'{{referencias\2'),
+        (ur'%s([Rr]efs|[Uu]nreferenced|[Rr]efimprove|[Uu]nsourced)(\s*[}\|])' % P_INICIO, ur'{{referencias\2'),
         # Pasar a {{copyedit}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Oo]rtografía|[Gg]ramática)(\s*[}\|])', ur'{{copyedit\2'),
+        (ur'%s([Oo]rtografía|[Gg]ramática)(\s*[}\|])' % P_INICIO, ur'{{copyedit\2'),
         # Pasar a {{otros usos}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Oo]trosusos|[Oo]theruses|[Oo]theruses4|[Ss]obre|[Pp]ara)(\s*[}\|])', ur'{{otros usos\2'),
+        (ur'%s([Oo]trosusos|[Oo]theruses|[Oo]theruses4|[Ss]obre|[Pp]ara)(\s*[}\|])' % P_INICIO, ur'{{otros usos\2'),
         # Pasar a {{distinguir}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Cc]onfusión|[Nn]o\sconfundir)(\s*[}\|])', ur'{{distinguir\2'),
+        (ur'%s([Cc]onfusión|[Nn]o\sconfundir)(\s*[}\|])' % P_INICIO, ur'{{distinguir\2'),
         # Pasar a {{desambiguación}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Dd]esambig|[Dd]es|[Dd]esambiguacion|[Dd]isambig)(\s*[}\|])', ur'{{desambiguación\2'),
+        (ur'%s([Dd]esambig|[Dd]es|[Dd]esambiguacion|[Dd]isambig)(\s*[}\|])' % P_INICIO, ur'{{desambiguación\2'),
         # Pasar a {{listaref}}
-        (ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Rr]ef(?:erences|list)(\s*[}\|])', ur'{{listaref\1'),
+        (ur'%s[Rr]ef(?:erences|list)(\s*[}\|])' % P_INICIO, ur'{{listaref\1'),
 
         # Estandarizar secciones
             # Álbumes
@@ -906,43 +938,46 @@ fixes['inva-wp-es'] = {
             ur'«.*?»',
             ur'\s"[^"]+"[\s\.,;:]',
             # Contenido de citas
-            ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*([Cc]ita'
-                                                                     ur'|[Qq]uote'
-                                                                     ur'|[Cc]quote'
-                                                                     ur'|[Qq]uotation'
-                                                                     ur'|[Zz]itat)[\s_]*\|.+?}}',
+            (ur'%s([Cc]ita'
+               ur'|[Qq]uote'
+               ur'|[Cc]quote'
+               ur'|[Qq]uotation'
+               ur'|[Zz]itat'
+               ur')[\s_]*\|.+?}}') % P_INICIO,
             ur'{{[^}]+?\|[\s_]*(cita|quote|quotation)[\s_]*=.+?(}}|\|)',
             # Títulos, por falsos positivos
             ur'\|\s*(title|t[íi]tulo)\s*=\s*[^\]\|]*?[\]\|]',
             # Minúsculas inciertas en meses
-            ur'(?i)(acuerdo'
-                ur'|decreto'
-                ur'|ley'
-                ur'|norma(tiva)?'
-                ur'|[óo]rden'
-                ur'|procedimiento'
-                ur'|resoluci[óo]n) +del? +\d\d? +del? +\S\S',
+            (ur'(?i)(acuerdo'
+                 ur'|decreto'
+                 ur'|ley'
+                 ur'|norma(tiva)?'
+                 ur'|[óo]rden'
+                 ur'|procedimiento'
+                 ur'|resoluci[óo]n'
+                 ur') +del? +\d\d? +del? +\S\S'),
             # Parámetros de {{cita web}} inseguros
-            ur'{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Rr]ef[-](internet|web)[^}]*(?:[Aa]lias\d?'
-                                                                                                   ur'|[Aa]pellido\d'
-                                                                                                   ur'|[Aa]utor\d'
-                                                                                                   ur'|[Cc]ap[íi]tulo'
-                                                                                                   ur'|[Cc]ontribuci[óo]n'
-                                                                                                   ur'|[Ff]amilia\d?'
-                                                                                                   ur'|[Ii]niciales\d?'
-                                                                                                   ur'|[Ii][Ss][Bb][Nn]'
-                                                                                                   ur'|[Nn]ombre\d'
-                                                                                                   ur'|[Nn][úu]mero'
-                                                                                                   ur'|[Pp]eri[óo]dico'
-                                                                                                   ur'|[Rr]ef'
-                                                                                                   ur'|[Rr]evista'
-                                                                                                   ur'|[Vv][íi]nculo ?autor\d)\s*=.*?[|}]',
+            (ur'%s[Rr]ef[-](internet|web)[^}]*(?:[Aa]lias\d?'
+                                             ur'|[Aa]pellido\d'
+                                             ur'|[Aa]utor\d'
+                                             ur'|[Cc]ap[íi]tulo'
+                                             ur'|[Cc]ontribuci[óo]n'
+                                             ur'|[Ff]amilia\d?'
+                                             ur'|[Ii]niciales\d?'
+                                             ur'|[Ii][Ss][Bb][Nn]'
+                                             ur'|[Nn]ombre\d'
+                                             ur'|[Nn][úu]mero'
+                                             ur'|[Pp]eri[óo]dico'
+                                             ur'|[Rr]ef'
+                                             ur'|[Rr]evista'
+                                             ur'|[Vv][íi]nculo ?autor\d'
+                                             ur')\s*=.*?[|}]') % P_INICIO,
             # No editar si el artículo contiene determinadas plantillas
                 # Artículos cuya edición por bots queda prohibida según
                 # [[w:es:WP:PBOT#R9.3]]
-                ur'.*{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Nn]obots[\s_]*[|}].*',
+                ur'.*%s[Nn]obots[\s_]*[|}].*' % P_INICIO,
                 # Artículos en desarrollo activo
-                ur'.*{{[\s_]*(?:[Pp]lantilla[\s_]*:|[Tt]emplate[\s_]*:)?[\s_]*[Ee]n[ _]?uso[\s_]*[|}].*',
+                ur'.*%s[Ee]n[ _]?uso[\s_]*[|}].*' % P_INICIO,
                 # Plantillas de mantenimiento
                 ## Excepciones deshabilitadas por sobrecarga --abián, 6 feb 2015
                 ##ur'(?i).*{{[\s_]*(?:plantilla[\s_]*:|template[\s_]*:)?[\s_]*autotrad[\s_]*[|}].*',
