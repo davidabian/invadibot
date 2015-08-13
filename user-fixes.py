@@ -911,6 +911,7 @@ fixes['inva-wp-es'] = {
                                                                      ur'|[Cc]quote'
                                                                      ur'|[Qq]uotation'
                                                                      ur'|[Zz]itat)[\s_]*\|.+?}}',
+            ur'{{[^}]+?\|[\s_]*(cita|quote|quotation)[\s_]*=.+?(}}|\|)',
             # Títulos, por falsos positivos
             ur'\|\s*(title|t[íi]tulo)\s*=\s*[^\]\|]*?[\]\|]',
             # Minúsculas inciertas en meses
