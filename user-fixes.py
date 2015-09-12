@@ -644,19 +644,19 @@ fixes['inva-wp-es'] = {
                 # Aplicar minúscula inicial al mes, retirar artículo al año y
                 # suprimir posible sustantivo "día" en años posteriores al 99
                 #  Ejemplo: día 12 de Marzo del 1456 → 12 de marzo de 1456
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Ee]nero\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2enero de \3\4'),
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Ff]ebrero\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2febrero de \3\4'),
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Mm]arzo\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2marzo de \3\4'),
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Aa]bril\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2abril de \3\4'),
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Mm]ayo\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2mayo de \3\4'),
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Jj]unio\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2junio de \3\4'),
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Jj]ulio\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2julio de \3\4'),
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Aa]gosto\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2agosto de \3\4'),
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Ss]eptiembre\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2septiembre de \3\4'),
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Ss]etiembre\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2setiembre de \3\4'),
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Oo]ctubre\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2octubre de \3\4'),
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Nn]oviembre\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2noviembre de \3\4'),
-                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Dd]iciembre\s+del?\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\2diciembre de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Ee]nero\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2enero de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Ff]ebrero\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2febrero de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Mm]arzo\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2marzo de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Aa]bril\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2abril de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Mm]ayo\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2mayo de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Jj]unio\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2junio de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Jj]ulio\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2julio de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Aa]gosto\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2agosto de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Ss]eptiembre\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2septiembre de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Ss]etiembre\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2setiembre de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Oo]ctubre\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2octubre de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Nn]oviembre\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2noviembre de \3\4'),
+                (ur'([Dd][íi]a\s+)?(\d\d?\s+de\s+)[Dd]iciembre\s+del?\s+(\[\[)?\s?(\d{4}[^\d])', ur'\2diciembre de \3\4'),
 
                 # Suprimir término "año" en años posteriores al 999
                 #  Ejemplo: 12 de marzo del año 1456 → 12 de marzo de 1456
@@ -676,19 +676,19 @@ fixes['inva-wp-es'] = {
 
                 # Suprimir cero a la izquierda en fechas con palabras
                 #  Ejemplo: 01 de febrero de 1996 → 1 de febrero de 1996
-                (ur'([^\d])0(\d\s+de\s+)enero\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2enero de \3\4'),
-                (ur'([^\d])0(\d\s+de\s+)febrero\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2febrero de \3\4'),
-                (ur'([^\d])0(\d\s+de\s+)marzo\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2marzo de \3\4'),
-                (ur'([^\d])0(\d\s+de\s+)abril\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2abril de \3\4'),
-                (ur'([^\d])0(\d\s+de\s+)mayo\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2mayo de \3\4'),
-                (ur'([^\d])0(\d\s+de\s+)junio\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2junio de \3\4'),
-                (ur'([^\d])0(\d\s+de\s+)julio\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2julio de \3\4'),
-                (ur'([^\d])0(\d\s+de\s+)agosto\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2agosto de \3\4'),
-                (ur'([^\d])0(\d\s+de\s+)septiembre\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2septiembre de \3\4'),
-                (ur'([^\d])0(\d\s+de\s+)setiembre\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2setiembre de \3\4'),
-                (ur'([^\d])0(\d\s+de\s+)octubre\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2octubre de \3\4'),
-                (ur'([^\d])0(\d\s+de\s+)noviembre\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2noviembre de \3\4'),
-                (ur'([^\d])0(\d\s+de\s+)diciembre\s+de\s+(\[\[)?\s?(\d\d\d\d?[^\d])', ur'\1\2diciembre de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)enero\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2enero de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)febrero\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2febrero de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)marzo\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2marzo de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)abril\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2abril de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)mayo\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2mayo de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)junio\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2junio de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)julio\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2julio de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)agosto\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2agosto de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)septiembre\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2septiembre de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)setiembre\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2setiembre de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)octubre\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2octubre de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)noviembre\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2noviembre de \3\4'),
+                (ur'([^\d])0(\d\s+de\s+)diciembre\s+de\s+(\[\[)?\s?(\d{4}[^\d])', ur'\1\2diciembre de \3\4'),
 
                 # Aplicar versalita y espacio indivisible en siglos
                 # con especificación de antes o después de Cristo
