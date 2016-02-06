@@ -937,6 +937,8 @@ fixes['inva-wp-es'] = {
             # Expresiones literales entre comillas
             ur'«.*?»',
             ur'\s"[^"]+"[\s\.,;:]',
+            # Plantilla de ordenación en categorías, https://es.wikipedia.org/?diff=88664101
+            ur'{{ORDENAR:[^}]+?}}',
             # Contenido de citas
             (ur'%s([Cc]ita'
                ur'|[Qq]uote'
