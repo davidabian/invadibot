@@ -1023,7 +1023,7 @@ fixes['inva-wp-es'] = {
             ur'[^=]=\s*<ref',
             # Con referencias como celdas, evitar cambios cosméticos
             ur'\|\s*<ref', # https://es.wikipedia.org/?diff=80029650
-            ur'!!\s*<ref', # https://es.wikipedia.org/?diff=90806051
+            ur'\!\!\s*<ref', # https://es.wikipedia.org/?diff=90806051
             # Categorías
             #  Se hace "avaricioso" por tratarse del final del artículo, donde
             #  no se efectuarán más modificaciones
