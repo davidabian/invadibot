@@ -404,20 +404,25 @@ fixes['inva-wp-es'] = {
         (ur'(%s)U(?:RL|rl)(\s*=.*?})' % P_CITA_INICIO, ur'\1url\2'),
 
         # Traducir ubicaciones (en orden alfabético en español)
-        (ur'(?i)(%subicación\s*=\s*)(?:bagh?dad)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Bagdad\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:[ei]sta[mn]bul)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Estambul\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:londres|london)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Londres\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:m[éeè][jx]ico,? ?d\.? ?f\.?|mexico city)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1México,&nbsp;D.&nbsp;F.\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:mosc[úuù]|moscow|moskva)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Moscú\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:nanjing|nank[íiì]ng?)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Nankín\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:nueva delh?i|new delhi)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Nueva&nbsp;Delhi\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:nue[bv]a york?|new york(?: city)?)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Nueva&nbsp;York\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:beijing|pek[íiì]ng?)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Pekín\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:seo?[úuù]l)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Seúl\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:sevill[ae])(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Sevilla\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:sh?angh?[áaà]i)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Shanghái\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:tehe?r[áaà]n)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Teherán\2'),
-        (ur'(?i)(%subicación\s*=\s*)(?:tok[iy]o)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Tokio\2'),
+        #
+        # DESACTIVADO. La ISO-690 determina que «el lugar de producción se debería
+        #              anotar tal como aparece destacado en la fuente preferida»,
+        #              por lo que no debería traducirse automáticamente.
+        #
+        #(ur'(?i)(%subicación\s*=\s*)(?:bagh?dad)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Bagdad\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:[ei]sta[mn]bul)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Estambul\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:londres|london)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Londres\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:m[éeè][jx]ico,? ?d\.? ?f\.?|mexico city)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1México,&nbsp;D.&nbsp;F.\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:mosc[úuù]|moscow|moskva)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Moscú\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:nanjing|nank[íiì]ng?)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Nankín\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:nueva delh?i|new delhi)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Nueva&nbsp;Delhi\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:nue[bv]a york?|new york(?: city)?)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Nueva&nbsp;York\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:beijing|pek[íiì]ng?)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Pekín\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:seo?[úuù]l)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Seúl\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:sevill[ae])(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Sevilla\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:sh?angh?[áaà]i)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Shanghái\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:tehe?r[áaà]n)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Teherán\2'),
+        #(ur'(?i)(%subicación\s*=\s*)(?:tok[iy]o)(\s*[}\|])' % P_CITA_INICIO_NC, ur'\1Tokio\2'),
 
         # Traducir idiomas (en orden alfabético en español)
             # Traducciones de "alemán" al español
