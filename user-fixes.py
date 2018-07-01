@@ -573,7 +573,8 @@ fixes['inva-wp-es'] = {
         # Estandarizar y traducir fechas al español
             # En plantillas de citas
                 # AAAA[-/\\\.]MM[-/\\\.]DD → DD-MM-AAAA
-                (ur'({{[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)([12]\d\d\d)[-/\\\.](\d\d?)[-/\\\.](\d\d?)(\s*[}\|])', ur'\1\4-\3-\2\5'),
+                # Desactivado
+                #(ur'({{[\s_]*[Cc]ita[ _](?:libro|noticia|publicación|web)[^}]*?\|\s*(?:fecha|fechaacceso|fechaarchivo)\s*=\s*)([12]\d\d\d)[-/\\\.](\d\d?)[-/\\\.](\d\d?)(\s*[}\|])', ur'\1\4-\3-\2\5'),
 
                 # Estandarizar y traducir meses aislados
                 #  Ejemplo: {{cita web|mes=January}} → {{cita web|mes=enero}}
